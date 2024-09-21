@@ -58,10 +58,10 @@ public class Exercicios {
    
    
     
-        public void CalculadoraAvancada() {
+        public void calculadoraAvancada() {
             Scanner sc = new Scanner(System.in);
             boolean continuar = true;
-    
+            double num1, num2 = 0, resultado = 0;
             while (continuar) {
                 try {
                     System.out.println("Escolha a operação aritmética:");
@@ -80,7 +80,7 @@ public class Exercicios {
                         break;
                     }
     
-                    double num1, num2 = 0, resultado = 0;
+                 
     
                     // Solicitar o primeiro número para todas as operações
                     System.out.println("Informe o primeiro número:");
@@ -139,7 +139,7 @@ public class Exercicios {
     
             sc.close();
         }
-    
+
     }
     
 
