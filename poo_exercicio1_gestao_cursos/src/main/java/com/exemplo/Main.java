@@ -92,20 +92,47 @@ public class Main {
 
                 case "5":
                     String nomeCursoN = JOptionPane.showInputDialog("Informe o nome do curso");
-                    try {
+
+                    try {boolean encontrado2 = false;
                         for (Curso curso : cursos) {
                      if (curso.getNomeCurso().equalsIgnoreCase(nomeCursoN)) {
-                        curso.atribuirNotaNome(nomeCursoN, 0);
+                        curso.atribuirNota();
+                        encontrado2 = true;
                      }
 
+                        }  if (encontrado2) {
+                            throw new Exception("Curso não encontrado");
                         }
                     } catch (Exception e) {
-                        // TODO: handle exception
+                        System.err.println(e);
                     }
+                    break;
+
+
+                    case "6":
+                    String nomeCursoR = JOptionPane.showInputDialog("Informe o nome do curso");
+                    try {boolean encontrado3 = false;
+                        for (Curso curso : cursos) {
+                     if (curso.getNomeCurso().equalsIgnoreCase(nomeCursoR)) {
+                        curso.exibirResultadoFinal();
+                        encontrado3 = true;
+                     }
+                    }  if (encontrado3) {
+                        throw new Exception("Curso não encontrado");
+                    }
+                        
+                    } catch (Exception e) {
+                        System.err.println(e);
+                    }
+                    break;
+                    case "7":
+                    // Opção para criar um novo curso
+                   System.out.println("Saindo....");
                     break;
 
                 // Outros casos podem ser implementados aqui
                 default:
+                System.out.println("Digite uma opção valida");
                     break;
             }
         } while (!operacao.equals("7")); // Continua até que o usuário escolha sair

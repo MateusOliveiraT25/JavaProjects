@@ -2,6 +2,8 @@ package com.exemplo;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -47,15 +49,18 @@ public class Curso {
     }
 
     // Método para atribuir uma nota a um aluno pelo nome
-    public void atribuirNotaNome(String nomeAluno, double notaAluno) {
+    public void atribuirNota( ) {
+        if (alunos.size()==0) {
+            System.out.println("Nenhum aluno cadastrado");
+            
+        }
         for (Aluno aluno : alunos) {
             // Verifica se o aluno existe na lista
-            if (aluno.getNome().equalsIgnoreCase(nomeAluno)) {
-                aluno.setNota(notaAluno); // Atribui a nota ao aluno
-                return; // Sai do método após atribuir a nota
-            }
+            double nota = Double.parseDouble(JOptionPane.showInputDialog(
+            "Nota do" + aluno.getNome()+":"));
+            aluno.setNota(nota);
         }
-        System.out.println("Aluno não encontrado"); // Mensagem caso o aluno não seja encontrado
+        
     }
 
     // Método para exibir o resultado final de todos os alunos
