@@ -13,15 +13,14 @@ public class Main {
         do {
             // Exibe um menu para o usuário
             operacao = JOptionPane.showInputDialog(
-                "\n -----Gerenciamento de curso-----\n"
-                + "1 - Criar curso\n"
-                + "2 - Adicionar professor\n"
-                + "3 - Adicionar aluno\n"
-                + "4 - Informações do curso\n"
-                + "5 - Atribuir nota\n"
-                + "6 - Resultado final\n"
-                + "7 - Sair\n"
-            );
+                    "\n -----Gerenciamento de curso-----\n"
+                            + "1 - Criar curso\n"
+                            + "2 - Adicionar professor\n"
+                            + "3 - Adicionar aluno\n"
+                            + "4 - Informações do curso\n"
+                            + "5 - Atribuir nota\n"
+                            + "6 - Resultado final\n"
+                            + "7 - Sair\n");
 
             switch (operacao) {
                 case "1":
@@ -39,7 +38,8 @@ public class Main {
                             String nomeProf = JOptionPane.showInputDialog("Nome: ");
                             String cpfProf = JOptionPane.showInputDialog("CPF: ");
                             Double salarioProf = Double.parseDouble(JOptionPane.showInputDialog("Salário: "));
-                            Professor professor = new Professor(nomeProf, cpfProf, salarioProf); // Cria um novo professor
+                            Professor professor = new Professor(nomeProf, cpfProf, salarioProf); // Cria um novo
+                                                                                                 // professor
                             curso.addProf(professor); // Adiciona o professor ao curso
                         }
                     }
@@ -60,17 +60,47 @@ public class Main {
                                     String nomeAluno = JOptionPane.showInputDialog("Nome: ");
                                     String cpfAluno = JOptionPane.showInputDialog("CPF: ");
                                     String matriculaAluno = JOptionPane.showInputDialog("Matrícula: ");
-                                    curso.addAluno(new Aluno(nomeAluno, cpfAluno, matriculaAluno)); // Adiciona o aluno ao curso
-                                    
+                                    curso.addAluno(new Aluno(nomeAluno, cpfAluno, matriculaAluno)); // Adiciona o aluno
+                                                                                                    // ao curso
+
                                     // Pergunta se o usuário deseja adicionar outro aluno
                                     novoAluno = JOptionPane.showInputDialog("Inserir novo Aluno\n"
-                                        + "1 - Sim\n"
-                                        + "2 - Não").equals("1");
+                                            + "1 - Sim\n"
+                                            + "2 - Não").equals("1");
                                 } while (novoAluno); // Continua enquanto o usuário quiser adicionar mais alunos
                             }
                         }
+                        if (encontrado) {
+                            throw new Exception("Curso não encontrado");
+                        }
                     } catch (Exception e) {
-                        // Tratamento de exceção, se necessário
+                        System.err.println(e);
+                    }
+                    break;
+                case "4":
+                    String nomeCursoI = JOptionPane.showInputDialog("Informe o nome do curso");
+                    for (Curso curso : cursos) {
+                        if (curso.getNomeCurso().equalsIgnoreCase(nomeCursoI)) {
+                            curso.infoCurso();
+                            continue;
+                        }
+
+                    }
+                    System.out.println("Curso não encontrado");
+
+                    break;
+
+                case "5":
+                    String nomeCursoN = JOptionPane.showInputDialog("Informe o nome do curso");
+                    try {
+                        for (Curso curso : cursos) {
+                     if (curso.getNomeCurso().equalsIgnoreCase(nomeCursoN)) {
+                        curso.atribuirNotaNome(nomeCursoN, 0);
+                     }
+
+                        }
+                    } catch (Exception e) {
+                        // TODO: handle exception
                     }
                     break;
 
