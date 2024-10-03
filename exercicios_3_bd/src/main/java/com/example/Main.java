@@ -2,7 +2,10 @@ package com.example;
 
 public class Main {
     public static void main(String[] args) {
-        LeituraBD leitura = new LeituraBD();
+        Registro leitura = new Registro();
         leitura.teste();
+        leitura.miniMaxi();
+        leitura.mediaProduto();
+
     }
 }
