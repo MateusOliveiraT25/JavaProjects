@@ -103,3 +103,15 @@ O **Sistema de Manutenção Preventiva e Corretiva** é um software destinado ao
 - **Testes Automatizados e Validação Constante**: Implementação de testes em todas as camadas do sistema para minimizar erros.
 - **Backup Local**: Armazenamento temporário dos dados localmente, caso a API esteja indisponível.
 - **Treinamento de Equipe**: Capacitar a equipe no uso de tecnologias e bibliotecas adequadas, como Swing, para evitar gargalos de desenvolvimento.
+
+
+# Documentação do Sistema de Manutenção
+
+## Diagrama de Classe
+![Diagrama de Classe](diagramas/diagramas_de_classe.png)
+
+## Diagrama de Fluxo
+![Diagrama de Fluxo](diagramas/diagrama_fluxo.png)
+
+## Diagrama de Casos de Uso
+![Diagrama de Casos de Uso](diagramas/diagrama_uso.png)
