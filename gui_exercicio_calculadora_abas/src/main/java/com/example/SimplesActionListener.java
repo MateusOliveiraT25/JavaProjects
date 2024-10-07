@@ -4,10 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SimplesActionListener implements ActionListener {
-    private double valorAtual = 0; // Inicializa com 0 para evitar erros
-    private String operadorAtual = ""; // Inicializa vazio
+    private double valorAtual = 0;
+    private String operadorAtual = "";
     private CalculadoraSimples calculadoraSimples;
-    private boolean novoNumero = true; // Para limpar o display antes do próximo número
+    private boolean novoNumero = true;
 
     public SimplesActionListener(CalculadoraSimples calculadora) {
         this.calculadoraSimples = calculadora;
@@ -18,45 +18,34 @@ public class SimplesActionListener implements ActionListener {
         String comando = e.getActionCommand();
         String displayAtual = calculadoraSimples.getDisplaySimples().getText();
 
-        // Se o comando é um número (0-9)
-        if (comando.matches("\\d")) {
+        if (comando.matches("\\d")) { // Se for um número
             if (novoNumero) {
-                calculadoraSimples.setDisplaySimples(comando); // Inicia um novo número
+                calculadoraSimples.setDisplaySimples(comando); // Inicia novo número
                 novoNumero = false;
             } else {
-                calculadoraSimples.setDisplaySimples(displayAtual + comando);
+                calculadoraSimples.setDisplaySimples(displayAtual + comando); // Continua número
             }
-        }
-        // Se o comando é um operador (+, -, *, /)
-        else if (comando.matches("[+\\-*/]")) {
-            operadorAtual = comando; // Armazena o operador
-            valorAtual = Double.parseDouble(displayAtual); // Armazena o valor do display
-            novoNumero = true; // Prepara para o próximo número
-        } 
-        // Se o comando é "C", limpa o display
-        else if (comando.equals("C")) {
-            calculadoraSimples.setDisplaySimples("");
-            valorAtual = 0; // Reseta o valor atual
-            operadorAtual = ""; // Reseta o operador
-            novoNumero = true; // Prepara para um novo número
-        }
-        // Se o comando é "="
-        else if (comando.equals("=")) {
+        } else if (comando.matches("[+\\-*/]")) { // Se for um operador
+            operadorAtual = comando;
+            valorAtual = Double.parseDouble(displayAtual);
+            novoNumero = true;
+        } else if (comando.equals("C")) { // Se for 'C' (limpar)
+            limparDisplay();
+        } else if (comando.equals("=")) { // Se for '=' (calcular)
             double valorSegundo;
             try {
-                valorSegundo = Double.parseDouble(displayAtual); // Obtém o segundo valor
+                valorSegundo = Double.parseDouble(displayAtual);
             } catch (NumberFormatException ex) {
-                calculadoraSimples.setDisplaySimples("Erro"); // Se não for um número válido
+                calculadoraSimples.setDisplaySimples("Erro");
                 return;
             }
 
             double resultado = calcularResultado(valorSegundo);
             calculadoraSimples.setDisplaySimples(String.valueOf(resultado));
-            novoNumero = true; // Prepara para uma nova operação
+            novoNumero = true;
         }
     }
 
-    // Método para calcular o resultado da operação
     private double calcularResultado(double valorSegundo) {
         switch (operadorAtual) {
             case "+":
@@ -69,11 +58,18 @@ public class SimplesActionListener implements ActionListener {
                 if (valorSegundo != 0) {
                     return valorAtual / valorSegundo;
                 } else {
-                    calculadoraSimples.setDisplaySimples("Erro"); // Tratamento de divisão por zero
+                    calculadoraSimples.setDisplaySimples("Erro");
                     return 0;
                 }
             default:
-                return valorSegundo; // Se nenhum operador foi definido, retorna o segundo valor
+                return valorSegundo;
         }
+    }
+
+    private void limparDisplay() {
+        calculadoraSimples.setDisplaySimples("");
+        valorAtual = 0;
+        operadorAtual = "";
+        novoNumero = true;
     }
 }
