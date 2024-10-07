@@ -53,11 +53,17 @@ O **Sistema de Manutenção Preventiva e Corretiva** é um software destinado ao
 # Escopo do Projeto
 
 ## Objetivos:
-- Desenvolvimento da interface gráfica (**Swing**) para o gerenciamento de máquinas, técnicos e manutenções.
-- Implementação de funcionalidades **CRUD** (Create, Read, Update, Delete) para máquinas, manutenções, falhas e técnicos.
-- Geração de relatórios com base nos dados registrados, incluindo **indicadores de desempenho** como MTTR e MTBF.
-- Conexão com uma **API** para armazenar e manipular dados em tempo real.
-- Validação e testes para garantir a robustez do sistema.
+
+- **Desenvolvimento da Interface Gráfica**: Criar uma interface intuitiva utilizando **Swing** que permita o gerenciamento eficiente de máquinas, técnicos e manutenções, garantindo uma experiência de usuário fluida.
+
+- **Implementação de Funcionalidades CRUD**: Desenvolver operações **Create, Read, Update e Delete** para o gerenciamento de máquinas, manutenções, falhas e técnicos, assegurando a integridade e a atualização constante das informações.
+
+- **Geração de Relatórios Detalhados**: Implementar a funcionalidade de geração de relatórios abrangentes que analisem os dados registrados e apresentem indicadores de desempenho relevantes, como **MTTR** (Tempo Médio de Reparo) e **MTBF** (Tempo Médio Entre Falhas).
+
+- **Integração com API**: Estabelecer uma conexão robusta com uma **API REST** para a armazenagem e manipulação de dados em tempo real, garantindo a sincronização e a disponibilidade das informações.
+
+- **Validação e Testes Abrangentes**: Conduzir um processo rigoroso de validação e testes em todas as etapas do desenvolvimento para assegurar a robustez, a confiabilidade e a segurança do sistema, minimizando riscos de falhas durante a operação.
+
 
 ---
 
@@ -84,7 +90,7 @@ O **Sistema de Manutenção Preventiva e Corretiva** é um software destinado ao
 
 ### Riscos Técnicos:
 - **Integração com API**: Problemas de conectividade ou tempo de resposta da API podem impactar a performance.
-- **Falta de Familiaridade com Swing**: A equipe pode ter dificuldade em desenvolver uma interface gráfica rica e amigável.
+- **Falta de Familiaridade com interface gráfica**: A equipe pode ter dificuldade em desenvolver uma interface gráfica rica e amigável.
 - **Inconsistência de Dados**: Erros no armazenamento ou recuperação de dados podem comprometer a confiabilidade dos relatórios e dos indicadores.
 
 ### Riscos Operacionais:
