@@ -108,7 +108,7 @@ O **Sistema de Manutenção Preventiva e Corretiva** é um software destinado ao
 # Documentação do Sistema de Manutenção
 
 ## Diagrama de Classe
-![Diagrama de Classe](diagramas/diagramas_de_classe.png)
+![Diagrama de Classe](diagramas/diagrama_de_classe.png)
 
 ## Diagrama de Fluxo
 ![Diagrama de Fluxo](diagramas/diagrama_fluxo.png)
