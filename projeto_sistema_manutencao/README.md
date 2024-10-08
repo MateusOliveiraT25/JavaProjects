@@ -128,3 +128,24 @@ O **Sistema de Manutenção Preventiva e Corretiva** é um software destinado ao
 
 ## Testes http://localhost:3000/maquinas DELETE
 ![Teste Maquinas Delete](testes/maquinas_delete.PNG)
+
+## Testes http://localhost:3000/historicoManutencao GET
+![Teste Historico Manutencao Get](testes/historico_get.PNG)
+
+## Testes http://localhost:3000/historicoManutencao POST
+![Teste Historico Manutencao Post](testes/historico_post.PNG)
+
+## Testes http://localhost:3000/falhas GET
+![Teste Falhas Get](testes/falhas_get.PNG)
+
+## Testes http://localhost:3000/falhas POST
+![Teste Falhas Post](testes/falhas.PNG)
+
+## Testes http://localhost:3000/tecnicos GET
+![Teste tecnicos Get](testes/tecnicos_get.PNG)
+
+## Testes http://localhost:3000/tecnicos POST
+![Teste tecnicos Post](testes/tecnicos_post.PNG)
+
+## Testes http://localhost:3000/delete POST
+![Teste tecnicos Delete](testes/delete_post.PNG)
