@@ -1,0 +1,64 @@
+{
+  "maquinas": [
+    {
+      "id": "1",
+      "codigo": "M001",
+      "nome": "Torno CNC",
+      "modelo": "CNC 3000",
+      "fabricante": "Siemens",
+      "dataAquisicao": "2020-01-10",
+      "tempoVidaEstimado": 10,
+      "localizacao": "Linha 1",
+      "detalhes": "Operação em alta precisão",
+      "manual": "URL do manual"
+    }
+  ],
+  "historicoManutencao": [
+    {
+      "id": "1",
+      "maquinaId": 1,
+      "data": "2024-10-07",
+      "tipo": "Preventiva",
+      "pecasTrocadas": "Correia",
+      "tempoDeParada": 4,
+      "tecnicoId": "João Silva",
+      "observacoes": "Substituição preventiva da correia."
+    },
+    {
+      "id": "2",
+      "maquinaId": 1,
+      "data": "2024-10-08",
+      "tipo": "Corretiva",
+      "pecasTrocadas": "Rolamento",
+      "tempoDeParada": 6,
+      "tecnicoId": "Maria Oliveira",
+      "observacoes": "Substituição do rolamento devido a desgaste."
+    }
+  ],
+  "falhas": [
+    {
+      "id": "1",
+      "maquinaId": 1,
+      "data": "2024-09-28",
+      "problema": "Falha no motor",
+      "prioridade": "Alta",
+      "operador": "Carlos Lima"
+    },
+    {
+      "id": "2",
+      "maquinaId": 1,
+      "data": "2024-10-05",
+      "problema": "Vibração excessiva",
+      "prioridade": "Média",
+      "operador": "Ana Souza"
+    }
+  ],
+  "tecnicos": [
+    {
+      "id": "2",
+      "nome": "Maria Oliveira",
+      "especialidade": "Elétrica",
+      "disponibilidade": "Ocupado"
+    }
+  ]
+}

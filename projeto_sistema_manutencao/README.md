@@ -115,3 +115,7 @@ O **Sistema de Manutenção Preventiva e Corretiva** é um software destinado ao
 
 ## Diagrama de Casos de Uso
 ![Diagrama de Casos de Uso](diagramas/diagrama_de_uso.png)
+
+
+## Testes http://localhost:3000/maquinas GET
+![Diagrama de Casos de Uso](testes/maquinas_get)
