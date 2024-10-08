@@ -1,0 +1,2 @@
+# Ignorar node_modules em ApiRest
+/src/main/resources/ApiRest/node_modules/
