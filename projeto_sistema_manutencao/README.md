@@ -139,7 +139,7 @@ O **Sistema de Manutenção Preventiva e Corretiva** é um software destinado ao
 ![Teste Falhas Get](testes/falhas_get.PNG)
 
 ## Testes http://localhost:3000/falhas POST
-![Teste Falhas Post](testes/falhas.PNG)
+![Teste Falhas Post](testes/falhas_post.PNG)
 
 ## Testes http://localhost:3000/tecnicos GET
 ![Teste tecnicos Get](testes/tecnicos_get.PNG)
@@ -147,5 +147,5 @@ O **Sistema de Manutenção Preventiva e Corretiva** é um software destinado ao
 ## Testes http://localhost:3000/tecnicos POST
 ![Teste tecnicos Post](testes/tecnicos_post.PNG)
 
-## Testes http://localhost:3000/delete POST
-![Teste tecnicos Delete](testes/delete_post.PNG)
+## Testes http://localhost:3000/delete DELETE
+![Teste tecnicos Delete](testes/tecnicos_delete.PNG)
