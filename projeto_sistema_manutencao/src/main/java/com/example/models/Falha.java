@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,8 +13,8 @@ import java.util.Date;
 @Setter
 public class Falha {
     private String id;
-    private int maquinaId;
-    private Date data;
+    private String maquinaId;
+    private LocalDate data;
     private String problema;
     private String prioridade;
     private String operador;

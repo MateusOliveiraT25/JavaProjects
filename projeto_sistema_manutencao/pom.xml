@@ -23,6 +23,10 @@
             <artifactId>lombok</artifactId>
             <version>1.18.34</version>
         </dependency>
-
+<dependency>
+    <groupId>org.json</groupId>
+    <artifactId>json</artifactId>
+    <version>20210307</version> <!-- Ou a versão mais recente -->
+</dependency>
     </dependencies>
 </project>

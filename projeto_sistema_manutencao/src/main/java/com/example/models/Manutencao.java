@@ -13,7 +13,7 @@ import java.util.Date;
 @Setter
 public class Manutencao {
     private String id;
-    private int maquinaId;
+    private String maquinaId;
     private Date data;
     private String tipo;
     private String pecasTrocadas;

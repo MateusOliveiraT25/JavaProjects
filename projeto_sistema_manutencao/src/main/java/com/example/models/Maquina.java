@@ -18,7 +18,7 @@ public class Maquina {
     private String nome;
     private String modelo;
     private String fabricante;
-    private Date dataAquisicao;
+    private String dataAquisicao;
     private int tempoVidaEstimado;
     private String localizacao;
     private String detalhes;
