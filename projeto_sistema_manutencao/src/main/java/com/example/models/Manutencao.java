@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -14,7 +15,7 @@ import java.util.Date;
 public class Manutencao {
     private String id;
     private String maquinaId;
-    private Date data;
+    private LocalDate data;
     private String tipo;
     private String pecasTrocadas;
     private int tempoDeParada;
