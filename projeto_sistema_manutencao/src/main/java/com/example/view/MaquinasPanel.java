@@ -28,7 +28,7 @@ public class MaquinasPanel extends JPanel {
 
         // Inicializando o model da tabela com as colunas
         tableModel = new DefaultTableModel(new Object[] {
-                "ID", "Código", "Nome", "Modelo", "Fabricante", "Detalhes","Localizacao","Tempo Vida Estimado"
+                "ID",  "Nome", "Modelo", "Fabricante", "Detalhes","Localizacao","Tempo Vida Estimado"
         }, 0);  // Número de linhas inicial: 0
 
         // Criar JTable com o model
@@ -39,7 +39,6 @@ public class MaquinasPanel extends JPanel {
         for (Maquina maquina : maquinas) {
             tableModel.addRow(new Object[] {
                     maquina.getId(),
-                    maquina.getCodigo(),
                     maquina.getNome(),
                     maquina.getModelo(),
                     maquina.getFabricante(),

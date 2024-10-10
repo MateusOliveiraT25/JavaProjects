@@ -25,10 +25,13 @@ public class ManutencaoController {
         return response; // Retorna a resposta da API
     }
 
-    // Método para ler todas as manutenções
-    public void readManutencoes() {
-        manutencoes = ManutencaoApi.getManutencoes();
-    }
+  // Método para ler todas as manutenções
+public List<Manutencao> readManutencoes() {
+    // Chama o método getManutencoes da ManutencaoApi e armazena o resultado
+    List<Manutencao> manutencoes = ManutencaoApi.getManutencoes();
+    return manutencoes; // Retorna a lista de manutenções
+}
+
 
     // Método para obter a lista de manutenções
     public List<Manutencao> getManutencoes() {

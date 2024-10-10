@@ -14,7 +14,7 @@ public class SistemaManutencaoGUI extends JFrame {
 
     public SistemaManutencaoGUI() {
         super("Sistema de manutenção");
-        this.setSize(800,600);
+        this.setSize(1000,500);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setLayout(new BorderLayout());

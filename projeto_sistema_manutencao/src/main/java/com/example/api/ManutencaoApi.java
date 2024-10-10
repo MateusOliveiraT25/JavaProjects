@@ -62,7 +62,7 @@ public class ManutencaoApi {
         String jsonPayload = jsonObject.toString();
 
         // Faz uma requisição POST para o endpoint "manutencoes" com o payload JSON
-        return ApiConnection.postData("manutencoes", jsonPayload);
+        return ApiConnection.postData("historicoManutencao", jsonPayload);
     }
 
     // Método para atualizar uma manutenção existente no servidor
@@ -81,12 +81,12 @@ public class ManutencaoApi {
         String jsonPayload = jsonObject.toString();
 
         // Faz uma requisição PUT para atualizar a manutenção com o ID especificado
-        return ApiConnection.putData("manutencoes/" + manutencao.getId(), jsonPayload);
+        return ApiConnection.putData("historicoManutencao/" + manutencao.getId(), jsonPayload);
     }
 
     // Método para deletar uma manutenção no servidor com base no ID
     public static String deleteManutencao(String id) {
         // Faz uma requisição DELETE para o endpoint "manutencoes/{id}"
-        return ApiConnection.deleteData("manutencoes/" + id);
+        return ApiConnection.deleteData("historicoManutencao/" + id);
     }
 }
