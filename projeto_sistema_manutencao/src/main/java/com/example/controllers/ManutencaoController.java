@@ -3,35 +3,35 @@ package com.example.controllers;
 import com.example.api.ManutencaoApi;
 import com.example.models.Manutencao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ManutencaoController {
+    // Atributo para armazenar a lista de manutenções
     private List<Manutencao> manutencoes;
 
     // Construtor que inicializa a lista de manutenções
     public ManutencaoController() {
-        manutencoes = new ArrayList<>();
+        // Inicializa a lista de manutenções ao carregar
+        manutencoes = readManutencoes();
     }
 
     // Método para criar uma nova manutenção
-    public String createManutencao(Manutencao manutencao) {
+    public Manutencao createManutencao(Manutencao manutencao) {
         // Chama a API para criar a manutenção e armazena a resposta
-        String response = ManutencaoApi.createManutencao(manutencao);
-        if (response != null) {
+        Manutencao novaManutencao = ManutencaoApi.createManutencao(manutencao);
+        if (novaManutencao != null) {
             // Atualiza a lista de manutenções após criar uma nova
-            readManutencoes();
+            manutencoes = readManutencoes();
         }
-        return response; // Retorna a resposta da API
+        return novaManutencao; // Retorna a nova manutenção criada
     }
 
-  // Método para ler todas as manutenções
-public List<Manutencao> readManutencoes() {
-    // Chama o método getManutencoes da ManutencaoApi e armazena o resultado
-    List<Manutencao> manutencoes = ManutencaoApi.getManutencoes();
-    return manutencoes; // Retorna a lista de manutenções
-}
-
+    // Método para ler todas as manutenções
+    public List<Manutencao> readManutencoes() {
+        // Chama o método getManutencoes da ManutencaoApi e armazena o resultado
+        manutencoes = ManutencaoApi.getManutencoes();
+        return manutencoes; // Retorna a lista de manutenções
+    }
 
     // Método para obter a lista de manutenções
     public List<Manutencao> getManutencoes() {
@@ -41,18 +41,20 @@ public List<Manutencao> readManutencoes() {
     // Método para atualizar uma manutenção existente
     public String updateManutencao(Manutencao manutencao) {
         String response = ManutencaoApi.updateManutencao(manutencao);
-        if (response != null) {
-            readManutencoes(); // Atualiza a lista de manutenções após a atualização
+        if (response != null && response.equals("Success")) {
+            // Atualiza a lista de manutenções após a atualização
+            manutencoes = readManutencoes();
         }
-        return response;
+        return response; // Retorna a resposta da API
     }
 
     // Método para deletar uma manutenção pelo ID
     public String deleteManutencao(String id) {
         String response = ManutencaoApi.deleteManutencao(id);
-        if (response != null) {
-            readManutencoes(); // Atualiza a lista de manutenções após a exclusão
+        if (response != null && response.equals("Success")) {
+            // Atualiza a lista de manutenções após a exclusão
+            manutencoes = readManutencoes();
         }
-        return response;
+        return response; // Retorna a resposta da API
     }
 }

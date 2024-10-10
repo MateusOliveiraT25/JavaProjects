@@ -11,6 +11,66 @@
       "localizacao": "Linha 1",
       "detalhes": "Operação em alta precisão",
       "manual": "URL do manual"
+    },
+    {
+      "id": "6291",
+      "tempoVidaEstimado": 2,
+      "codigo": "22",
+      "localizacao": "2",
+      "nome": "22",
+      "fabricante": "22",
+      "manual": "2",
+      "modelo": "22",
+      "dataAquisicao": "2020-12-10",
+      "detalhes": "2"
+    },
+    {
+      "id": "dfda",
+      "tempoVidaEstimado": 2,
+      "codigo": "22",
+      "localizacao": "2",
+      "nome": "22",
+      "fabricante": "22",
+      "manual": "2",
+      "modelo": "22",
+      "dataAquisicao": "2020-12-10",
+      "detalhes": "2"
+    },
+    {
+      "tempoVidaEstimado": 4,
+      "codigo": "1222",
+      "localizacao": "t",
+      "nome": "t",
+      "fabricante": "t",
+      "manual": "t",
+      "modelo": "t",
+      "dataAquisicao": "2020-10-10",
+      "detalhes": "t",
+      "id": "4907"
+    },
+    {
+      "tempoVidaEstimado": 1,
+      "codigo": "128900",
+      "localizacao": "r",
+      "nome": "m",
+      "fabricante": "m",
+      "manual": "r",
+      "modelo": "m",
+      "dataAquisicao": "1999-11-12",
+      "detalhes": "r",
+      "id": "11d8"
+    },
+    {
+      "tempoVidaEstimado": 2,
+      "codigo": "sim",
+      "localizacao": "2",
+      "nome": "ss",
+      "fabricante": "ss",
+      "manual": "2",
+      "modelo": "ss",
+      "dataAquisicao": "2000-10-22",
+      "detalhes": "2",
+      "id": "ff11"
     }
   ],
   "historicoManutencao": [
@@ -33,6 +93,46 @@
       "tempoDeParada": 6,
       "tecnicoId": "Maria Oliveira",
       "observacoes": "Substituição do rolamento devido a desgaste."
+    },
+    {
+      "id": "39e0",
+      "tempoDeParada": 4,
+      "observacoes": "eee",
+      "tipo": "te",
+      "data": "2000-11-12",
+      "maquinaId": "3",
+      "pecasTrocadas": "e",
+      "tecnicoId": "F"
+    },
+    {
+      "tempoDeParada": 2,
+      "observacoes": "2",
+      "tipo": "22",
+      "data": "2020-10-22",
+      "maquinaId": "124",
+      "pecasTrocadas": "2",
+      "tecnicoId": "2",
+      "id": "2582"
+    },
+    {
+      "tempoDeParada": 2,
+      "observacoes": "2",
+      "tipo": "2",
+      "data": "2000-11-12",
+      "maquinaId": "12ddd",
+      "pecasTrocadas": "2",
+      "tecnicoId": "2",
+      "id": "7481"
+    },
+    {
+      "id": "617d",
+      "tempoDeParada": 2,
+      "observacoes": "2",
+      "tipo": "22",
+      "data": "2000-11-11",
+      "maquinaId": "33",
+      "pecasTrocadas": "22",
+      "tecnicoId": "2"
     }
   ],
   "falhas": [

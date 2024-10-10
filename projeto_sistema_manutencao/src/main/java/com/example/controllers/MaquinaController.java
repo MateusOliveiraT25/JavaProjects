@@ -13,13 +13,14 @@ public class MaquinaController {
     }
 
     // Método para criar uma nova máquina
-    public String createMaquina(Maquina maquina) {
-        String response = MaquinaApi.createMaquina(maquina);
-        if (response != null) {
-            // Optionally refresh the list of machines after creating a new one
+    public Maquina createMaquina(Maquina maquina) {
+        // Chama a API e espera um objeto Maquina em resposta
+        Maquina novaMaquina = MaquinaApi.createMaquina(maquina);
+        if (novaMaquina != null) {
+            // Atualiza a lista de máquinas após criar uma nova
             readMaquinas();
         }
-        return response; // Return response from the API
+        return novaMaquina; // Retorna o objeto Maquina criado
     }
 
     // Método para listar todas as máquinas
@@ -32,19 +33,19 @@ public class MaquinaController {
     public String updateMaquina(Maquina maquina) {
         String response = MaquinaApi.updateMaquina(maquina);
         if (response != null) {
-            // Optionally refresh the list of machines after updating
+            // Opcionalmente, atualiza a lista de máquinas após a atualização
             readMaquinas();
         }
-        return response; // Return response from the API
+        return response; // Retorna resposta da API
     }
 
     // Método para deletar uma máquina
     public String deleteMaquina(String id) {
         String response = MaquinaApi.deleteMaquina(id);
         if (response != null) {
-            // Optionally refresh the list of machines after deletion
+            // Opcionalmente, atualiza a lista de máquinas após a exclusão
             readMaquinas();
         }
-        return response; // Return response from the API
+        return response; // Retorna resposta da API
     }
 }

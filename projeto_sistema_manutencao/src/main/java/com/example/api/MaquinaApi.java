@@ -47,8 +47,7 @@ public class MaquinaApi {
         return maquinas;
     }
 
-    // Método para criar uma nova máquina no servidor
-    public static String createMaquina(Maquina maquina) {
+    public static Maquina createMaquina(Maquina maquina) {
         // Cria um objeto JSON com os dados da máquina
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("codigo", maquina.getCodigo());
@@ -60,13 +59,36 @@ public class MaquinaApi {
         jsonObject.put("localizacao", maquina.getLocalizacao());
         jsonObject.put("detalhes", maquina.getDetalhes());
         jsonObject.put("manual", maquina.getManual());
-
+    
         // Converte o objeto JSON para string para enviar no payload da requisição
         String jsonPayload = jsonObject.toString();
-
+    
         // Faz uma requisição POST para o endpoint "maquinas" com o payload JSON
-        return ApiConnection.postData("maquinas", jsonPayload);
+        String responseJson = ApiConnection.postData("maquinas", jsonPayload);
+        
+        // Verifica se a resposta não é nula e processa
+        if (responseJson != null) {
+            JSONObject response = new JSONObject(responseJson);
+            // Aqui você pode verificar se o ID está presente para confirmar que a criação foi bem-sucedida
+            if (response.has("id")) {
+                // Retorna a máquina criada como um objeto
+                return new Maquina(
+                    response.getString("id"),
+                    response.getString("codigo"),
+                    response.getString("nome"),
+                    response.getString("modelo"),
+                    response.getString("fabricante"),
+                    LocalDate.parse(response.getString("dataAquisicao")),
+                    response.getInt("tempoVidaEstimado"),
+                    response.getString("localizacao"),
+                    response.getString("detalhes"),
+                    response.getString("manual")
+                );
+            }
+        }
+        return null; // Retorna nulo se houver algum erro
     }
+    
 
     // Método para atualizar uma máquina existente no servidor
     public static String updateMaquina(Maquina maquina) {
