@@ -3,50 +3,46 @@ package com.example.api;
 
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.models.Falha; // Certifique-se de que o pacote está correto
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FalhaApi {
 
-    // Método para obter uma lista de falhas do servidor
-    public static List<Falha> getFalhas() {
-        // Faz uma requisição GET para o endpoint "falhas" e armazena a resposta JSON
-        String json = ApiConnection.getData("falhas");
-        List<Falha> falhas = new ArrayList<>();
+  public static List<Falha> getFalhas() {
+    String json = ApiConnection.getData("falhas");
+    List<Falha> falhas = new ArrayList<>();
 
-        // Verifica se a resposta JSON não é nula
-        if (json != null) {
-            // Converte a string JSON para um JSONArray
+    if (json != null) {
+        try {
             JSONArray jsonArray = new JSONArray(json);
-
-            // Itera sobre o JSONArray para criar objetos Falha
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                // Converte o campo de data para LocalDate usando parse()
-                LocalDate data = LocalDate.parse(jsonObject.getString("data"));
+                // Usando optString para evitar JSONException
+                String id = jsonObject.getString("id");
+                String maquinaId = jsonObject.optString("maquinaId", "desconhecido"); // Usando optString
+                LocalDate data = LocalDate.parse(jsonObject.getString("data"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                String problema = jsonObject.getString("problema");
+                String prioridade = jsonObject.getString("prioridade");
+                String operador = jsonObject.getString("operador");
 
-                // Cria um objeto Falha com base nos dados do JSON
-                Falha falha = new Falha(
-                        jsonObject.getString("id"),
-                        jsonObject.getString("maquinaId"),
-                        data, // Passa o LocalDate para o construtor
-                        jsonObject.getString("problema"),
-                        jsonObject.getString("prioridade"),
-                        jsonObject.getString("operador"));
-
-                // Adiciona a falha à lista de falhas
+                Falha falha = new Falha(id, maquinaId, data, problema, prioridade, operador);
                 falhas.add(falha);
             }
+        } catch (JSONException e) {
+            e.printStackTrace(); // Log de erros no parsing
         }
-        // Retorna a lista de falhas
-        return falhas;
     }
+    return falhas;
+}
+
 
     // Método para criar uma nova falha no servidor
     public static String createFalha(Falha falha) {

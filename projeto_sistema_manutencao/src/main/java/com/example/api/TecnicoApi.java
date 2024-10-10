@@ -10,36 +10,36 @@ import java.util.List;
 
 public class TecnicoApi {
 
-    // Método para obter uma lista de técnicos do servidor
     public static List<Tecnico> getTecnicos() {
         // Faz uma requisição GET para o endpoint "tecnicos" e armazena a resposta JSON
         String json = ApiConnection.getData("tecnicos");
         List<Tecnico> tecnicos = new ArrayList<>();
-
+    
         // Verifica se a resposta JSON não é nula
         if (json != null) {
             // Converte a string JSON para um JSONArray
             JSONArray jsonArray = new JSONArray(json);
-
+    
             // Itera sobre o JSONArray para criar objetos Tecnico
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-
+    
                 // Cria um objeto Tecnico com base nos dados do JSON
                 Tecnico tecnico = new Tecnico(
                         jsonObject.getString("id"),
                         jsonObject.getString("nome"),
                         jsonObject.getString("especialidade"),
-                        jsonObject.getString("disponibilidade"));
-
-                // Adiciona o técnico à lista de técnicos
+                        jsonObject.getString("disponibilidade") // Disponibilidade como String
+                );
+    
+                // Adiciona o tecnico à lista de tecnicos
                 tecnicos.add(tecnico);
             }
         }
-        // Retorna a lista de técnicos
+        // Retorna a lista de tecnicos
         return tecnicos;
     }
-
+    
     // Método para criar um novo técnico no servidor
     public static String createTecnico(Tecnico tecnico) {
         // Cria um objeto JSON com os dados do técnico

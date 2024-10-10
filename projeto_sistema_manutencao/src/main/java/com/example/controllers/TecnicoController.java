@@ -23,10 +23,13 @@ public class TecnicoController {
         return response; // Retorna a resposta da API
     }
 
-    // Método para obter a lista de técnicos e armazená-la localmente
-    public void readTecnicos() {
-        tecnicos = TecnicoApi.getTecnicos();
-    }
+ // Método para obter a lista de técnicos e armazená-la localmente
+public List<Tecnico> readTecnicos() {
+    // Obtém a lista de técnicos do API
+    List<Tecnico> tecnicos = TecnicoApi.getTecnicos();
+    return tecnicos; // Retorna a lista de técnicos
+}
+
 
     // Método para atualizar um técnico existente
     public String updateTecnico(Tecnico tecnico) {

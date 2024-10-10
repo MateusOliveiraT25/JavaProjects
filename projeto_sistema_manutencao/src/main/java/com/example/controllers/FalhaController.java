@@ -1,7 +1,9 @@
 package com.example.controllers;
 
 import com.example.api.FalhaApi;
+import com.example.api.ManutencaoApi;
 import com.example.models.Falha;
+import com.example.models.Manutencao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +25,12 @@ public class FalhaController {
         return response; // Retorna a resposta da API
     }
 
-    // Método para obter a lista de falhas e armazenar na lista local
-    public void readFalhas() {
-        falhas = FalhaApi.getFalhas();
-    }
+// Método para obter a lista de falhas e armazenar na lista local
+public List<Falha> readFalhas() {
+    List<Falha> falhas = FalhaApi.getFalhas();
+    return falhas; 
+}
+
 
     // Método para atualizar uma falha existente
     public String updateFalha(Falha falha) {
