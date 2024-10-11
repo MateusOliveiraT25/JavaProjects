@@ -27,7 +27,9 @@ public class ManutencaoPanel extends JPanel {
     private DefaultTableModel tableModel;
     private JButton btnSalvarAlteracoes;
     private JButton btnCadastrarManutencao;
+    private JButton btnGerarRelatorio; // Botão para gerar o relatório
 
+    
     public ManutencaoPanel() {
         super(new BorderLayout());
 
@@ -61,13 +63,16 @@ public class ManutencaoPanel extends JPanel {
         JScrollPane scrollPane = new JScrollPane(manutencoesTable);
         this.add(scrollPane, BorderLayout.CENTER);
 
-        // Criando painel inferior com botões
+       // Criando painel inferior com botões
         JPanel painelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER));
         btnCadastrarManutencao = new JButton("Cadastrar");
         btnSalvarAlteracoes = new JButton("Atualizar");
+        btnGerarRelatorio = new JButton("Gerar Relatório"); // Adicionando botão de relatório
         painelInferior.add(btnCadastrarManutencao);
         painelInferior.add(btnSalvarAlteracoes);
+        painelInferior.add(btnGerarRelatorio); // Adiciona o botão ao painel
         this.add(painelInferior, BorderLayout.SOUTH);
+
 
         // Adicionando ActionListeners para os botões
         addActionListeners();
@@ -241,7 +246,71 @@ btnSalvarAlteracoes.addActionListener(e -> {
         JOptionPane.showMessageDialog(null, "Por favor, selecione uma linha para editar.");
     }
 });
+          // ActionListener para o botão "Gerar Relatório"
+        btnGerarRelatorio.addActionListener(e -> {
+            gerarRelatorioManutencao();
+        });
 
+ // Método para gerar o relatório de manutenção e calcular indicadores
+    private void gerarRelatorioManutencao() {
+        List<Manutencao> manutencoes = manutencaoController.readManutencoes();
+        String caminhoArquivo = "relatorio_manutencao.txt";
+        
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo))) {
+            writer.write("Relatório de Manutenção\n");
+            writer.write("=========================\n\n");
+            
+            // Escrevendo as manutenções
+            for (Manutencao manutencao : manutencoes) {
+                writer.write("ID: " + manutencao.getId() + "\n");
+                writer.write("Máquina ID: " + manutencao.getMaquinaId() + "\n");
+                writer.write("Data: " + manutencao.getData().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + "\n");
+                writer.write("Tipo: " + manutencao.getTipo() + "\n");
+                writer.write("Peças Trocadas: " + manutencao.getPecasTrocadas() + "\n");
+                writer.write("Tempo de Parada: " + manutencao.getTempoDeParada() + " minutos\n");
+                writer.write("Técnico ID: " + manutencao.getTecnicoId() + "\n");
+                writer.write("Observações: " + manutencao.getObservacoes() + "\n\n");
+            }
 
+            // Calculando MTTR (Tempo Médio de Reparo) e MTBF (Tempo Médio Entre Falhas)
+            double mttr = calcularMTTR(manutencoes);
+            double mtbf = calcularMTBF(manutencoes);
+
+            writer.write("Indicadores\n");
+            writer.write("===========\n");
+            writer.write("MTTR (Tempo Médio de Reparo): " + mttr + " minutos\n");
+            writer.write("MTBF (Tempo Médio Entre Falhas): " + mtbf + " horas\n");
+
+            JOptionPane.showMessageDialog(this, "Relatório gerado com sucesso: " + caminhoArquivo);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao gerar relatório: " + ex.getMessage());
+        }
+    }
+
+    // Função para calcular MTTR (Tempo Médio de Reparo)
+    private double calcularMTTR(List<Manutencao> manutencoes) {
+        int totalTempoDeParada = 0;
+        int totalManutencoes = manutencoes.size();
+
+        for (Manutencao manutencao : manutencoes) {
+            totalTempoDeParada += manutencao.getTempoDeParada();
+        }
+
+        return totalManutencoes > 0 ? (double) totalTempoDeParada / totalManutencoes : 0;
+    }
+
+    // Função para calcular MTBF (Tempo Médio Entre Falhas)
+    private double calcularMTBF(List<Manutencao> manutencoes) {
+        if (manutencoes.size() < 2) {
+            return 0;  // Não podemos calcular MTBF com menos de 2 manutenções
+        }
+
+        LocalDate primeiraData = manutencoes.get(0).getData();
+        LocalDate ultimaData = manutencoes.get(manutencoes.size() - 1).getData();
+        long diasEntreFalhas = java.time.temporal.ChronoUnit.DAYS.between(primeiraData, ultimaData);
+
+        return (double) diasEntreFalhas / (manutencoes.size() - 1);  // Tempo médio em dias
+    }
+}
     }
 }
