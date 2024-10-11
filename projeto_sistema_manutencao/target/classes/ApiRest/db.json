@@ -1,16 +1,16 @@
 {
   "maquinas": [
     {
-      "id": "1",
-      "codigo": "M001",
-      "nome": "Torno CNC",
-      "modelo": "CNC 3000",
-      "fabricante": "Siemens",
-      "dataAquisicao": "2020-01-10",
       "tempoVidaEstimado": 10,
+      "codigo": "M00111",
       "localizacao": "Linha 1",
+      "nome": "Torno CNC",
+      "fabricante": "Siemens",
+      "manual": "URL do manual",
+      "modelo": "CNC 3000",
+      "dataAquisicao": "2020-01-10",
       "detalhes": "Operação em alta precisão",
-      "manual": "URL do manual"
+      "id": "1"
     },
     {
       "tempoVidaEstimado": 2,
@@ -71,6 +71,18 @@
       "dataAquisicao": "2000-10-22",
       "detalhes": "2",
       "id": "ff11"
+    },
+    {
+      "tempoVidaEstimado": 1,
+      "codigo": "Mrewzzz",
+      "localizacao": "1",
+      "nome": "222",
+      "fabricante": "22",
+      "manual": "1",
+      "modelo": "22",
+      "dataAquisicao": "2000-10-11",
+      "detalhes": "1",
+      "id": "f74c"
     }
   ],
   "historicoManutencao": [
@@ -116,7 +128,7 @@
     },
     {
       "tempoDeParada": 2,
-      "observacoes": "2",
+      "observacoes": "2s",
       "tipo": "2",
       "data": "2000-11-12",
       "maquinaId": "12ddd",
@@ -125,40 +137,48 @@
       "id": "7481"
     },
     {
-      "id": "617d",
       "tempoDeParada": 2,
-      "observacoes": "2",
+      "observacoes": "2ss",
       "tipo": "22",
       "data": "2000-11-11",
       "maquinaId": "33",
       "pecasTrocadas": "22",
-      "tecnicoId": "2"
+      "tecnicoId": "2",
+      "id": "617d"
     }
   ],
   "falhas": [
     {
-      "id": "1",
-      "maquinaId": 1,
-      "data": "2024-09-28",
+      "data": "2024-01-28",
+      "prioridade": "Alt",
+      "maquinaId": "1s",
       "problema": "Falha no motor",
-      "prioridade": "Alta",
-      "operador": "Carlos Lima"
+      "operador": "Carlos Lima",
+      "id": "1"
     },
     {
       "data": "2024-10-05",
       "prioridade": "Média",
-      "maquinaId": "155",
+      "maquinaId": "155dd",
       "problema": "Vibração excessiva",
       "operador": "Ana Souza",
       "id": "2"
     },
     {
-      "id": "c7d3",
       "data": "2000-11-08",
-      "prioridade": "22",
+      "prioridade": "Baixa",
       "maquinaId": "55",
       "problema": "2",
-      "operador": "22"
+      "operador": "22",
+      "id": "c7d3"
+    },
+    {
+      "data": "2000-11-11",
+      "prioridade": "Baixa",
+      "maquinaId": "44e",
+      "problema": "ee",
+      "operador": "2sss",
+      "id": "4c92"
     }
   ],
   "tecnicos": [
@@ -167,18 +187,6 @@
       "disponibilidade": "Dispon�vel",
       "nome": "Maria Silva",
       "id": "2"
-    },
-    {
-      "id": "11d8",
-      "especialidade": "Eletricista",
-      "disponibilidade": "Dispon�vel",
-      "nome": "Jo�o"
-    },
-    {
-      "id": "8fc1",
-      "especialidade": "Eletricista",
-      "disponibilidade": "Dispon�vel",
-      "nome": "Jo�o"
     },
     {
       "id": "ced1",
@@ -193,40 +201,16 @@
       "nome": "Carlos"
     },
     {
-      "id": "1ea4",
       "especialidade": "Mec�nica",
       "disponibilidade": "Indispon�vel",
-      "nome": "Maria"
+      "nome": "Raquel",
+      "id": "1ea4"
     },
     {
-      "id": "a624",
-      "especialidade": "Eletr�nica",
-      "disponibilidade": "Dispon�vel",
-      "nome": "Carlos"
-    },
-    {
-      "id": "7750",
-      "especialidade": "Mec�nica",
-      "disponibilidade": "Indispon�vel",
-      "nome": "Maria"
-    },
-    {
-      "id": "5041",
-      "especialidade": "Eletricista",
-      "disponibilidade": "Dispon�vel",
-      "nome": "Jo�o"
-    },
-    {
-      "id": "8651",
-      "especialidade": "Eletricista",
-      "disponibilidade": "Dispon�vel",
-      "nome": "Jo�o"
-    },
-    {
-      "especialidade": "Eletricista",
-      "disponibilidade": "Dispon�vel",
-      "nome": "Jonas",
-      "id": "a740"
+      "especialidade": "Eletricistaaa",
+      "disponibilidade": "Ocupadoaa",
+      "nome": "Barbisszz",
+      "id": "8651"
     }
   ]
 }

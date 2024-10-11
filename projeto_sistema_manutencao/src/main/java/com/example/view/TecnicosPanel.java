@@ -234,6 +234,5 @@ public class TecnicosPanel extends JPanel {
             }
         });
         
-        
     }
 }
