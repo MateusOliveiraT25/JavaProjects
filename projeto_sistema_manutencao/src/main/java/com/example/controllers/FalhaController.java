@@ -2,8 +2,10 @@ package com.example.controllers;
 
 import com.example.api.FalhaApi;
 import com.example.api.ManutencaoApi;
+import com.example.api.MaquinaApi;
 import com.example.models.Falha;
 import com.example.models.Manutencao;
+import com.example.models.Maquina;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +18,13 @@ public class FalhaController {
     }
 
     // Método para criar uma nova falha
-    public String createFalha(Falha falha) {
-        String response = FalhaApi.createFalha(falha);
-        if (response != null) {
-            // Opcionalmente, atualize a lista de falhas após criar uma nova
+    public Falha createFalha(Falha falha) {
+         Falha novaFalha = FalhaApi.createFalha(falha);
+         if (novaFalha != null) {
+            // Atualiza a lista de máquinas após criar uma nova
             readFalhas();
         }
-        return response; // Retorna a resposta da API
+        return novaFalha; // Retorna o objeto Maquina criado
     }
 
 // Método para obter a lista de falhas e armazenar na lista local
@@ -33,14 +35,14 @@ public List<Falha> readFalhas() {
 
 
     // Método para atualizar uma falha existente
-    public String updateFalha(Falha falha) {
-        String response = FalhaApi.updateFalha(falha);
-        if (response != null) {
-            // Atualiza a lista de falhas após a modificação
-            readFalhas();
-        }
-        return response;
-    }
+    public Falha updateFalha(Falha falha) {
+        Falha novaFalha = FalhaApi.updateFalha(falha);
+        if (novaFalha != null) {
+           // Atualiza a lista de máquinas após criar uma nova
+           readFalhas();
+       }
+       return novaFalha; // Retorna o objeto Maquina criado
+   }
 
     // Método para deletar uma falha pelo ID
     public String deleteFalha(String id) {

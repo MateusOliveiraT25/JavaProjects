@@ -14,14 +14,16 @@ public class TecnicoController {
     }
 
     // Método para criar um novo técnico
-    public String createTecnico(Tecnico tecnico) {
-        String response = TecnicoApi.createTecnico(tecnico);
-        if (response != null) {
-            // Atualiza a lista de técnicos após a criação
-            readTecnicos();
-        }
-        return response; // Retorna a resposta da API
+ // Método para criar um novo técnico
+public Tecnico createTecnico(Tecnico tecnico) {
+    Tecnico novoTecnico = TecnicoApi.createTecnico(tecnico);
+    if (novoTecnico != null) {
+        // Atualiza a lista de técnicos após criar um novo
+        readTecnicos();
     }
+    return novoTecnico; // Retorna o objeto Técnico criado
+}
+
 
  // Método para obter a lista de técnicos e armazená-la localmente
 public List<Tecnico> readTecnicos() {

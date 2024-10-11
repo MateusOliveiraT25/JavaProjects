@@ -44,43 +44,82 @@ public class FalhaApi {
 }
 
 
-    // Método para criar uma nova falha no servidor
-    public static String createFalha(Falha falha) {
-        // Cria um objeto JSON com os dados da falha
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("maquinaId", falha.getMaquinaId());
-        jsonObject.put("data", falha.getData().toString()); // Converte LocalDate para String
-        jsonObject.put("problema", falha.getProblema());
-        jsonObject.put("prioridade", falha.getPrioridade());
-        jsonObject.put("operador", falha.getOperador());
+   // Método para criar uma nova falha no servidor
+public static Falha createFalha(Falha falha) {
+    // Cria um objeto JSON com os dados da falha
+    JSONObject jsonObject = new JSONObject();
+    jsonObject.put("maquinaId", falha.getMaquinaId());
+    jsonObject.put("data", falha.getData().toString()); // Converte LocalDate para String
+    jsonObject.put("problema", falha.getProblema());
+    jsonObject.put("prioridade", falha.getPrioridade());
+    jsonObject.put("operador", falha.getOperador());
 
-        // Converte o objeto JSON para string para enviar no payload da requisição
-        String jsonPayload = jsonObject.toString();
+    // Converte o objeto JSON para string para enviar no payload da requisição
+    String jsonPayload = jsonObject.toString();
 
-        // Faz uma requisição POST para o endpoint "falhas" com o payload JSON
-        return ApiConnection.postData("falhas", jsonPayload);
+    // Faz uma requisição POST para o endpoint "falhas" com o payload JSON
+    String responseJson = ApiConnection.postData("falhas", jsonPayload);
+    
+    // Verifica se a resposta não é nula e processa
+    if (responseJson != null) {
+        JSONObject response = new JSONObject(responseJson);
+        // Aqui você pode verificar se o ID está presente para confirmar que a criação foi bem-sucedida
+        if (response.has("id")) {
+            // Retorna a falha criada como um objeto
+            return new Falha(
+                response.getString("id"),
+                response.getString("maquinaId"),
+                LocalDate.parse(response.getString("data")), // Converte para LocalDate
+                response.getString("problema"),
+                response.getString("prioridade"),
+                response.getString("operador")
+            );
+        }
     }
+    return null; // Retorna nulo se houver algum erro
+}
 
-    // Método para atualizar uma falha existente no servidor
-    public static String updateFalha(Falha falha) {
-        // Cria um objeto JSON com os dados atualizados da falha
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("maquinaId", falha.getMaquinaId());
-        jsonObject.put("data", falha.getData().toString()); // Converte LocalDate para String
-        jsonObject.put("problema", falha.getProblema());
-        jsonObject.put("prioridade", falha.getPrioridade());
-        jsonObject.put("operador", falha.getOperador());
+// Método para atualizar uma falha existente no servidor
+public static Falha updateFalha(Falha falha) {
+    // Cria um objeto JSON com os dados atualizados da falha
+    JSONObject jsonObject = new JSONObject();
+    jsonObject.put("maquinaId", falha.getMaquinaId());
+    jsonObject.put("data", falha.getData().toString()); // Converte LocalDate para String
+    jsonObject.put("problema", falha.getProblema());
+    jsonObject.put("prioridade", falha.getPrioridade());
+    jsonObject.put("operador", falha.getOperador());
 
-        // Converte o objeto JSON para string para enviar no payload da requisição
-        String jsonPayload = jsonObject.toString();
+    // Converte o objeto JSON para string para enviar no payload da requisição
+    String jsonPayload = jsonObject.toString();
 
-        // Faz uma requisição PUT para atualizar a falha com o ID especificado
-        return ApiConnection.putData("falhas/" + falha.getId(), jsonPayload);
+    // Faz uma requisição PUT para atualizar a falha com o ID especificado
+    String responseJson = ApiConnection.putData("falhas/" + falha.getId(), jsonPayload);
+
+    // Verifica se a resposta não é nula e processa
+    if (responseJson != null) {
+        JSONObject response = new JSONObject(responseJson);
+        // Aqui você pode verificar se o ID está presente para confirmar que a atualização foi bem-sucedida
+        if (response.has("id")) {
+            // Retorna a falha atualizada como um objeto
+            return new Falha(
+                response.getString("id"),
+                response.getString("maquinaId"),
+                LocalDate.parse(response.getString("data")), // Converte para LocalDate
+                response.getString("problema"),
+                response.getString("prioridade"),
+                response.getString("operador")
+            );
+        }
     }
+    return null; // Retorna nulo se houver algum erro
+}
 
-    // Método para deletar uma falha no servidor com base no ID
-    public static String deleteFalha(String id) {
-        // Faz uma requisição DELETE para o endpoint "falhas/{id}"
-        return ApiConnection.deleteData("falhas/" + id);
-    }
+// Método para deletar uma falha no servidor com base no ID
+public static String deleteFalha(String id) {
+    // Faz uma requisição DELETE para o endpoint "falhas/{id}"
+    return ApiConnection.deleteData("falhas/" + id);
+}
+
+
+  
 }

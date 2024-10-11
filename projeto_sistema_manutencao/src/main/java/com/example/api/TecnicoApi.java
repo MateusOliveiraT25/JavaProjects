@@ -41,19 +41,35 @@ public class TecnicoApi {
     }
     
     // Método para criar um novo técnico no servidor
-    public static String createTecnico(Tecnico tecnico) {
-        // Cria um objeto JSON com os dados do técnico
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("nome", tecnico.getNome());
-        jsonObject.put("especialidade", tecnico.getEspecialidade());
-        jsonObject.put("disponibilidade", tecnico.getDisponibilidade());
+public static Tecnico createTecnico(Tecnico tecnico) {
+    // Cria um objeto JSON com os dados do técnico
+    JSONObject jsonObject = new JSONObject();
+    jsonObject.put("nome", tecnico.getNome());
+    jsonObject.put("especialidade", tecnico.getEspecialidade());
+    jsonObject.put("disponibilidade", tecnico.getDisponibilidade());
 
-        // Converte o objeto JSON para string para enviar no payload da requisição
-        String jsonPayload = jsonObject.toString();
+    // Converte o objeto JSON para string para enviar no payload da requisição
+    String jsonPayload = jsonObject.toString();
 
-        // Faz uma requisição POST para o endpoint "tecnicos" com o payload JSON
-        return ApiConnection.postData("tecnicos", jsonPayload);
+    // Faz uma requisição POST para o endpoint "tecnicos" com o payload JSON
+    String responseJson = ApiConnection.postData("tecnicos", jsonPayload);
+
+    // Verifica se a resposta não é nula e processa
+    if (responseJson != null) {
+        JSONObject response = new JSONObject(responseJson);
+        // Verifica se o ID está presente na resposta
+        if (response.has("id")) {
+            // Retorna o técnico criado como um objeto
+            return new Tecnico(
+                response.getString("id"),
+                response.getString("nome"),
+                response.getString("especialidade"),
+                response.getString("disponibilidade")
+            );
+        }
     }
+    return null; // Retorna nulo se houver algum erro
+}
 
     // Método para atualizar um técnico existente no servidor
     public static String updateTecnico(Tecnico tecnico) {

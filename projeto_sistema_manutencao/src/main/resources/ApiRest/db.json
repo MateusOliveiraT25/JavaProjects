@@ -13,16 +13,16 @@
       "manual": "URL do manual"
     },
     {
-      "id": "6291",
       "tempoVidaEstimado": 2,
       "codigo": "22",
       "localizacao": "2",
-      "nome": "22",
+      "nome": "tt22",
       "fabricante": "22",
       "manual": "2",
       "modelo": "22",
       "dataAquisicao": "2020-12-10",
-      "detalhes": "2"
+      "detalhes": "2",
+      "id": "6291"
     },
     {
       "id": "dfda",
@@ -145,12 +145,20 @@
       "operador": "Carlos Lima"
     },
     {
-      "id": "2",
-      "maquinaId": 1,
       "data": "2024-10-05",
-      "problema": "Vibração excessiva",
       "prioridade": "Média",
-      "operador": "Ana Souza"
+      "maquinaId": "155",
+      "problema": "Vibração excessiva",
+      "operador": "Ana Souza",
+      "id": "2"
+    },
+    {
+      "id": "c7d3",
+      "data": "2000-11-08",
+      "prioridade": "22",
+      "maquinaId": "55",
+      "problema": "2",
+      "operador": "22"
     }
   ],
   "tecnicos": [
@@ -215,28 +223,10 @@
       "nome": "Jo�o"
     },
     {
-      "id": "a740",
       "especialidade": "Eletricista",
       "disponibilidade": "Dispon�vel",
-      "nome": "Jo�o"
-    },
-    {
-      "id": "4d11",
-      "especialidade": "Eletricista",
-      "disponibilidade": "Dispon�vel",
-      "nome": "Jo�o"
-    },
-    {
-      "id": "4d4a",
-      "especialidade": "Eletricista",
-      "disponibilidade": "Dispon�vel",
-      "nome": "John"
-    },
-    {
-      "id": "89ac",
-      "especialidade": "Mec�nica",
-      "disponibilidade": "Indispon�vel",
-      "nome": "Mario"
+      "nome": "Jonas",
+      "id": "a740"
     }
   ]
 }
