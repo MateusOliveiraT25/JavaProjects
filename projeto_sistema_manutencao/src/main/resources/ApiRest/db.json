@@ -14,7 +14,7 @@
     },
     {
       "tempoVidaEstimado": 2,
-      "codigo": "22",
+      "codigo": "22yyy",
       "localizacao": "2",
       "nome": "tt22",
       "fabricante": "22",
@@ -62,7 +62,7 @@
     },
     {
       "tempoVidaEstimado": 2,
-      "codigo": "sim",
+      "codigo": "1234",
       "localizacao": "2",
       "nome": "ss",
       "fabricante": "ss",
@@ -83,47 +83,59 @@
       "dataAquisicao": "2000-10-11",
       "detalhes": "1",
       "id": "f74c"
+    },
+    {
+      "tempoVidaEstimado": 1,
+      "codigo": "123",
+      "localizacao": "df",
+      "nome": "er",
+      "fabricante": "qq",
+      "manual": "www",
+      "modelo": "ww",
+      "dataAquisicao": "2002-10-08",
+      "detalhes": "ww",
+      "id": "223d"
     }
   ],
   "historicoManutencao": [
     {
-      "id": "1",
-      "maquinaId": 1,
-      "data": "2024-10-07",
-      "tipo": "Preventiva",
-      "pecasTrocadas": "Correia",
       "tempoDeParada": 4,
+      "observacoes": "Substituição preventiva da correia.",
+      "tipo": "Preventiva",
+      "data": "2024-10-07",
+      "maquinaId": "1rrrr",
+      "pecasTrocadas": "Correia",
       "tecnicoId": "João Silva",
-      "observacoes": "Substituição preventiva da correia."
+      "id": "1"
     },
     {
-      "id": "2",
-      "maquinaId": 1,
-      "data": "2024-10-08",
-      "tipo": "Corretiva",
-      "pecasTrocadas": "Rolamento",
       "tempoDeParada": 6,
-      "tecnicoId": "Maria Oliveira",
-      "observacoes": "Substituição do rolamento devido a desgaste."
+      "observacoes": "Substituição do rolamento devido a desgaste.",
+      "tipo": "Corretiva",
+      "data": "2024-10-08",
+      "maquinaId": "1",
+      "pecasTrocadas": "Rolamentos",
+      "tecnicoId": "Maria Oliveir",
+      "id": "2"
     },
     {
-      "id": "39e0",
       "tempoDeParada": 4,
       "observacoes": "eee",
       "tipo": "te",
       "data": "2000-11-12",
-      "maquinaId": "3",
+      "maquinaId": "3x",
       "pecasTrocadas": "e",
-      "tecnicoId": "F"
+      "tecnicoId": "F",
+      "id": "39e0"
     },
     {
       "tempoDeParada": 2,
       "observacoes": "2",
       "tipo": "22",
       "data": "2020-10-22",
-      "maquinaId": "124",
-      "pecasTrocadas": "2",
-      "tecnicoId": "2",
+      "maquinaId": "124eeeyyyccc",
+      "pecasTrocadas": "22",
+      "tecnicoId": "trree",
       "id": "2582"
     },
     {
@@ -131,9 +143,9 @@
       "observacoes": "2s",
       "tipo": "2",
       "data": "2000-11-12",
-      "maquinaId": "12ddd",
+      "maquinaId": "555qqq",
       "pecasTrocadas": "2",
-      "tecnicoId": "2",
+      "tecnicoId": null,
       "id": "7481"
     },
     {
@@ -142,41 +154,61 @@
       "tipo": "22",
       "data": "2000-11-11",
       "maquinaId": "33",
-      "pecasTrocadas": "22",
-      "tecnicoId": "2",
+      "pecasTrocadas": "5",
+      "tecnicoId": null,
       "id": "617d"
+    },
+    {
+      "tempoDeParada": 3,
+      "observacoes": "r",
+      "tipo": "rttt",
+      "data": "2029-12-11",
+      "maquinaId": "123",
+      "pecasTrocadas": "3",
+      "tecnicoId": "r",
+      "id": "a7b2"
+    },
+    {
+      "tempoDeParada": 3,
+      "observacoes": "a",
+      "tipo": "qw",
+      "data": "1990-10-11",
+      "maquinaId": "4552",
+      "pecasTrocadas": "3",
+      "tecnicoId": "c",
+      "id": "8c03"
     }
   ],
   "falhas": [
     {
       "data": "2024-01-28",
       "prioridade": "Alt",
-      "maquinaId": "1s",
+      "maquinaId": "1stttrr",
       "problema": "Falha no motor",
       "operador": "Carlos Lima",
       "id": "1"
     },
     {
-      "data": "2024-10-05",
-      "prioridade": "Média",
-      "maquinaId": "155dd",
-      "problema": "Vibração excessiva",
-      "operador": "Ana Souza",
+      "data": "2024-10-08",
+      "prioridade": "Média8",
+      "maquinaId": "152342",
+      "problema": "Vibração excessiva8tt",
+      "operador": "Ana Souza8",
       "id": "2"
     },
     {
       "data": "2000-11-08",
-      "prioridade": "Baixa",
-      "maquinaId": "55",
-      "problema": "2",
+      "prioridade": "Baixa3",
+      "maquinaId": "55222888aarr",
+      "problema": "288",
       "operador": "22",
       "id": "c7d3"
     },
     {
       "data": "2000-11-11",
       "prioridade": "Baixa",
-      "maquinaId": "44e",
-      "problema": "ee",
+      "maquinaId": "44err",
+      "problema": "ee444",
       "operador": "2sss",
       "id": "4c92"
     }
@@ -184,33 +216,57 @@
   "tecnicos": [
     {
       "especialidade": "Mec�nica",
-      "disponibilidade": "Dispon�vel",
-      "nome": "Maria Silva",
-      "id": "2"
+      "disponibilidade": "dispon�vel",
+      "nome": "Mariawww",
+      "id": "ced1"
     },
     {
-      "id": "ced1",
-      "especialidade": "Mec�nica",
-      "disponibilidade": "Indispon�vel",
-      "nome": "Maria"
-    },
-    {
-      "id": "289e",
       "especialidade": "Eletr�nica",
       "disponibilidade": "Dispon�vel",
-      "nome": "Carlos"
+      "nome": "Carloswww",
+      "id": "289e"
     },
     {
       "especialidade": "Mec�nica",
-      "disponibilidade": "Indispon�vel",
-      "nome": "Raquel",
+      "disponibilidade": "Indispon�velddd",
+      "nome": "Henri",
       "id": "1ea4"
     },
     {
-      "especialidade": "Eletricistaaa",
-      "disponibilidade": "Ocupadoaa",
-      "nome": "Barbisszz",
-      "id": "8651"
+      "id": "c1df",
+      "especialidade": "Mecanica",
+      "disponibilidade": "Ocupado",
+      "nome": "Davi"
+    },
+    {
+      "id": "0333",
+      "especialidade": "Mec�nico",
+      "disponibilidade": "Dispon�vel",
+      "nome": "Jo�o"
+    },
+    {
+      "id": "33b2",
+      "especialidade": "Mec�nico",
+      "disponibilidade": "Dispon�vel",
+      "nome": "Jo�o"
+    },
+    {
+      "id": "6ca9",
+      "especialidade": "Mec�nico",
+      "disponibilidade": "Dispon�vel",
+      "nome": "Joao"
+    },
+    {
+      "id": "2b26",
+      "especialidade": "Mec�nico",
+      "disponibilidade": "Dispon�vel",
+      "nome": "Joao"
+    },
+    {
+      "id": "710f",
+      "especialidade": "Mecanico",
+      "disponibilidade": "Disponivel",
+      "nome": "Joao"
     }
   ]
 }

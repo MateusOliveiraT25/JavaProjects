@@ -33,19 +33,23 @@ public class ManutencaoApi {
         return manutencoes;
     }
 
-    // Método para converter JSONObject em Manutencao
-    private static Manutencao jsonToManutencao(JSONObject jsonObject) {
-        String id = jsonObject.getString("id");
-        String maquinaId = jsonObject.optString("maquinaId", "desconhecido");
-        LocalDate data = LocalDate.parse(jsonObject.getString("data"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        String tipo = jsonObject.getString("tipo");
-        String pecasTrocadas = jsonObject.getString("pecasTrocadas");
-        int tempoDeParada = jsonObject.getInt("tempoDeParada");
-        String tecnicoId = jsonObject.getString("tecnicoId");
-        String observacoes = jsonObject.getString("observacoes");
+   // Método para converter JSONObject em Manutencao
+private static Manutencao jsonToManutencao(JSONObject jsonObject) {
+    String id = jsonObject.getString("id");
+    String maquinaId = jsonObject.optString("maquinaId", "desconhecido");
+    LocalDate data = LocalDate.parse(jsonObject.getString("data"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    String tipo = jsonObject.getString("tipo");
+    String pecasTrocadas = jsonObject.getString("pecasTrocadas");
+    int tempoDeParada = jsonObject.getInt("tempoDeParada");
+    
+    // Use optString para evitar JSONException caso tecnicoId não seja uma string
+    String tecnicoId = jsonObject.optString("tecnicoId", "desconhecido");
+    
+    String observacoes = jsonObject.getString("observacoes");
 
-        return new Manutencao(id, maquinaId, data, tipo, pecasTrocadas, tempoDeParada, tecnicoId, observacoes);
-    }
+    return new Manutencao(id, maquinaId, data, tipo, pecasTrocadas, tempoDeParada, tecnicoId, observacoes);
+}
+
 
     // Método para criar uma nova manutenção
     public static Manutencao createManutencao(Manutencao manutencao) {
@@ -64,21 +68,23 @@ public class ManutencaoApi {
     }
 
     // Método para atualizar uma manutenção existente
-    public static String updateManutencao(Manutencao manutencao) {
+    public static boolean updateManutencao(Manutencao manutencao) {
         JSONObject jsonObject = manutencaoToJson(manutencao);
-        return ApiConnection.putData("historicoManutencao/" + manutencao.getId(), jsonObject.toString());
+        String response = ApiConnection.putData("historicoManutencao/" + manutencao.getId(), jsonObject.toString());
+        return response != null; // Retorna true se a atualização foi bem-sucedida
     }
 
     // Método para deletar uma manutenção pelo ID
-    public static String deleteManutencao(String id) {
-        return ApiConnection.deleteData("historicoManutencao/" + id);
+    public static boolean deleteManutencao(String id) {
+        String response = ApiConnection.deleteData("historicoManutencao/" + id);
+        return response != null; // Retorna true se a deleção foi bem-sucedida
     }
 
     // Método para converter Manutencao em JSONObject
     private static JSONObject manutencaoToJson(Manutencao manutencao) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("maquinaId", manutencao.getMaquinaId());
-        jsonObject.put("data", manutencao.getData().toString());
+        jsonObject.put("data", manutencao.getData().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))); // Formata a data para String
         jsonObject.put("tipo", manutencao.getTipo());
         jsonObject.put("pecasTrocadas", manutencao.getPecasTrocadas());
         jsonObject.put("tempoDeParada", manutencao.getTempoDeParada());

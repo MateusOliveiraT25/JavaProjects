@@ -3,6 +3,10 @@ package com.example.view;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -14,83 +18,80 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import com.example.controllers.ManutencaoController;
 import com.example.models.Manutencao;
-import com.example.models.Maquina;
 
 public class ManutencaoPanel extends JPanel {
-    // Atributos
     private ManutencaoController manutencaoController;
     private JTable manutencoesTable;
     private DefaultTableModel tableModel;
     private JButton btnSalvarAlteracoes;
     private JButton btnCadastrarManutencao;
+    private JButton btnGerarRelatorio;
 
     public ManutencaoPanel() {
         super(new BorderLayout());
-
-        // Inicializando o controlador
         manutencaoController = new ManutencaoController();
 
-        // Inicializando o model da tabela com as colunas
         tableModel = new DefaultTableModel(new Object[] {
-                "ID", "Máquina ID", "Data", "Tipo", "Peças Trocadas", "Tempo de Parada", "Técnico ID", "Observações"
-        }, 0);  // Número de linhas inicial: 0
+            "ID", "Máquina ID", "Data", "Tipo", "Peças Trocadas", "Tempo de Parada", "Técnico ID", "Observações"
+        }, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Desabilita a edição direta na tabela
+            }
+        };
 
-        // Criar JTable com o model
         manutencoesTable = new JTable(tableModel);
-
-        // Preenchendo a tabela com as manutenções do controlador
+        
         List<Manutencao> manutencoes = manutencaoController.readManutencoes();
         for (Manutencao manutencao : manutencoes) {
             tableModel.addRow(new Object[] {
-                    manutencao.getId(),
-                    manutencao.getMaquinaId(),
-                    manutencao.getData(),
-                    manutencao.getTipo(),
-                    manutencao.getPecasTrocadas(),
-                    manutencao.getTempoDeParada(),
-                    manutencao.getTecnicoId(),
-                    manutencao.getObservacoes()
+                manutencao.getId(),
+                manutencao.getMaquinaId(),
+                manutencao.getData(),
+                manutencao.getTipo(),
+                manutencao.getPecasTrocadas(),
+                manutencao.getTempoDeParada(),
+                manutencao.getTecnicoId(),
+                manutencao.getObservacoes()
             });
         }
 
-        // Adicionando a JTable a um JScrollPane
         JScrollPane scrollPane = new JScrollPane(manutencoesTable);
         this.add(scrollPane, BorderLayout.CENTER);
 
-        // Criando painel inferior com botões
         JPanel painelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER));
         btnCadastrarManutencao = new JButton("Cadastrar");
         btnSalvarAlteracoes = new JButton("Atualizar");
+        btnGerarRelatorio = new JButton("Gerar Relatório");
         painelInferior.add(btnCadastrarManutencao);
         painelInferior.add(btnSalvarAlteracoes);
+        painelInferior.add(btnGerarRelatorio);
         this.add(painelInferior, BorderLayout.SOUTH);
 
-        // Adicionando ActionListeners para os botões
         addActionListeners();
+        addDoubleClickListener();
     }
 
     private void addActionListeners() {
-        // ActionListener para o botão "Cadastrar"
         btnCadastrarManutencao.addActionListener(e -> {
-            // Cria um novo JDialog para o cadastro de manutenção
             JDialog dialog = new JDialog((JDialog) null, "Cadastrar Nova Manutenção", true);
             dialog.setSize(400, 400);
             dialog.setLayout(new GridLayout(0, 2));
 
-            // Adiciona campos de texto para os atributos da manutenção
             JTextField txtMaquinaId = new JTextField();
-            JTextField txtData = new JTextField(); // Sugere formato "yyyy-MM-dd"
+            JTextField txtData = new JTextField(); // Formato "yyyy-MM-dd"
             JTextField txtTipo = new JTextField();
             JTextField txtPecasTrocadas = new JTextField();
             JTextField txtTempoDeParada = new JTextField();
             JTextField txtTecnicoId = new JTextField();
             JTextField txtObservacoes = new JTextField();
 
-            // Adiciona rótulos e campos ao dialog
             dialog.add(new JLabel("Máquina ID:"));
             dialog.add(txtMaquinaId);
             dialog.add(new JLabel("Data (yyyy-MM-dd):"));
@@ -106,38 +107,28 @@ public class ManutencaoPanel extends JPanel {
             dialog.add(new JLabel("Observações:"));
             dialog.add(txtObservacoes);
 
-            // Botão para cadastrar a manutenção
             JButton btnSubmit = new JButton("Cadastrar");
             dialog.add(btnSubmit);
 
-            // Quando o botão for clicado, valida e envia os dados
             btnSubmit.addActionListener(ev -> {
                 try {
-                    // Recupera os dados dos campos de texto
                     String maquinaId = txtMaquinaId.getText();
-                    LocalDate data = LocalDate.parse(txtData.getText()); // Valida data
+                    LocalDate data = LocalDate.parse(txtData.getText());
                     String tipo = txtTipo.getText();
                     String pecasTrocadas = txtPecasTrocadas.getText();
                     int tempoDeParada = Integer.parseInt(txtTempoDeParada.getText());
                     String tecnicoId = txtTecnicoId.getText();
                     String observacoes = txtObservacoes.getText();
 
-                    // Cria um novo objeto Manutencao
                     Manutencao novaManutencao = new Manutencao(null, maquinaId, data, tipo, pecasTrocadas, tempoDeParada, tecnicoId, observacoes);
-
-                    // Envia para a API
                     Manutencao manutencaoCriada = manutencaoController.createManutencao(novaManutencao);
 
-                    // Se a manutenção criada não for nula, atualiza a tabela e fecha o diálogo
                     if (manutencaoCriada != null) {
-                        tableModel.addRow(new Object[]{
-                                manutencaoCriada.getId(), // Assume que o ID é retornado na criação
-                                maquinaId, data,
-                                tipo, pecasTrocadas, tempoDeParada,
-                                tecnicoId, observacoes
+                        tableModel.addRow(new Object[] {
+                            manutencaoCriada.getId(), maquinaId, data, tipo, pecasTrocadas, tempoDeParada, tecnicoId, observacoes
                         });
                         JOptionPane.showMessageDialog(dialog, "Manutenção cadastrada com sucesso!");
-                        dialog.dispose(); // Fecha o diálogo
+                        dialog.dispose();
                     } else {
                         JOptionPane.showMessageDialog(dialog, "Erro ao cadastrar manutenção.");
                     }
@@ -146,39 +137,59 @@ public class ManutencaoPanel extends JPanel {
                 }
             });
 
-            // Mostra o formulário
             dialog.setVisible(true);
         });
-// ActionListener para o botão "Salvar Manutenção"
-btnSalvarAlteracoes.addActionListener(e -> {
-    // Verifica se uma linha está selecionada
-    int selectedRow = manutencoesTable.getSelectedRow();
-    if (selectedRow != -1) {
-        // Cria um novo JDialog para editar a manutenção
+
+        btnSalvarAlteracoes.addActionListener(e -> {
+            int selectedRow = manutencoesTable.getSelectedRow();
+            if (selectedRow != -1) {
+                editarManutencao(selectedRow);
+            } else {
+                JOptionPane.showMessageDialog(null, "Por favor, selecione uma linha para editar.");
+            }
+        });
+
+        btnGerarRelatorio.addActionListener(e -> {
+            gerarRelatorioDeManutencoes();
+        });
+    }
+
+    private void addDoubleClickListener() {
+        manutencoesTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                if (e.getClickCount() == 2) { // Verifica se é um clique duplo
+                    int selectedRow = manutencoesTable.getSelectedRow();
+                    if (selectedRow != -1) {
+                        editarManutencao(selectedRow);
+                    }
+                }
+            }
+        });
+    }
+
+    private void editarManutencao(int selectedRow) {
         JDialog dialog = new JDialog((JDialog) null, "Editar Manutenção", true);
         dialog.setSize(400, 400);
         dialog.setLayout(new GridLayout(0, 2));
 
-        // Pega os valores da linha selecionada
-        String id = String.valueOf(tableModel.getValueAt(selectedRow, 0)); // ID da manutenção
+        String id = String.valueOf(tableModel.getValueAt(selectedRow, 0));
         String maquinaId = (String) tableModel.getValueAt(selectedRow, 1);
-        LocalDate data = (LocalDate) tableModel.getValueAt(selectedRow, 2); // Obtém o LocalDate diretamente
+        LocalDate data = (LocalDate) tableModel.getValueAt(selectedRow, 2);
         String tipo = (String) tableModel.getValueAt(selectedRow, 3);
         String pecasTrocadas = (String) tableModel.getValueAt(selectedRow, 4);
         int tempoDeParada = Integer.parseInt(tableModel.getValueAt(selectedRow, 5).toString());
         String tecnicoId = (String) tableModel.getValueAt(selectedRow, 6);
         String observacoes = (String) tableModel.getValueAt(selectedRow, 7);
 
-        // Adiciona campos de texto para os atributos da manutenção
         JTextField txtMaquinaId = new JTextField(maquinaId);
-        JTextField txtData = new JTextField(data.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))); // Formata a data
+        JTextField txtData = new JTextField(data.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         JTextField txtTipo = new JTextField(tipo);
         JTextField txtPecasTrocadas = new JTextField(pecasTrocadas);
         JTextField txtTempoDeParada = new JTextField(String.valueOf(tempoDeParada));
         JTextField txtTecnicoId = new JTextField(tecnicoId);
         JTextField txtObservacoes = new JTextField(observacoes);
 
-        // Adiciona rótulos e campos ao dialog
         dialog.add(new JLabel("Máquina ID:"));
         dialog.add(txtMaquinaId);
         dialog.add(new JLabel("Data (yyyy-MM-dd):"));
@@ -194,54 +205,86 @@ btnSalvarAlteracoes.addActionListener(e -> {
         dialog.add(new JLabel("Observações:"));
         dialog.add(txtObservacoes);
 
-        // Botão para salvar as alterações
         JButton btnSubmit = new JButton("Salvar");
         dialog.add(btnSubmit);
 
-        // Quando o botão "Salvar" for clicado, valida e envia os dados
         btnSubmit.addActionListener(ev -> {
             try {
-                // Recupera os dados dos campos de texto
-                String newMaquinaId = txtMaquinaId.getText();
-                LocalDate newData = LocalDate.parse(txtData.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")); // Validação de formato
-                String newTipo = txtTipo.getText();
-                String newPecasTrocadas = txtPecasTrocadas.getText();
-                int newTempoDeParada = Integer.parseInt(txtTempoDeParada.getText());
-                String newTecnicoId = txtTecnicoId.getText();
-                String newObservacoes = txtObservacoes.getText();
+                String newMaquinaId = txtMaquinaId.getText().trim();
+                LocalDate newData = LocalDate.parse(txtData.getText().trim());
+                String newTipo = txtTipo.getText().trim();
+                String newPecasTrocadas = txtPecasTrocadas.getText().trim();
+                int newTempoDeParada = Integer.parseInt(txtTempoDeParada.getText().trim());
+                String newTecnicoId = txtTecnicoId.getText().trim();
+                String newObservacoes = txtObservacoes.getText().trim();
 
-                // Atualiza os dados da manutenção
-                Manutencao manutencaoAtualizada = new Manutencao(id, newMaquinaId, newData, newTipo,
-                        newPecasTrocadas, newTempoDeParada, newTecnicoId, newObservacoes);
+                // Validação básica
+                if (newMaquinaId.isEmpty() || newTipo.isEmpty() || newTecnicoId.isEmpty()) {
+                    JOptionPane.showMessageDialog(dialog, "Preencha todos os campos obrigatórios!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
-                // Envia para a API para atualizar a manutenção
-                manutencaoController.updateManutencao(manutencaoAtualizada); // Supondo que esse método não retorne nada
+                Manutencao manutencaoAtualizada = new Manutencao(id, newMaquinaId, newData, newTipo, newPecasTrocadas, newTempoDeParada, newTecnicoId, newObservacoes);
+                manutencaoController.updateManutencao(manutencaoAtualizada);
 
-                // Exibe mensagem de sucesso
-                JOptionPane.showMessageDialog(dialog, "Alterações salvas com sucesso!");
-
-                // Atualiza a tabela para refletir as mudanças
+                // Atualiza a tabela
                 tableModel.setValueAt(newMaquinaId, selectedRow, 1);
-                tableModel.setValueAt(newData.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), selectedRow, 2); // Formata para String
+                tableModel.setValueAt(newData.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), selectedRow, 2);
                 tableModel.setValueAt(newTipo, selectedRow, 3);
                 tableModel.setValueAt(newPecasTrocadas, selectedRow, 4);
                 tableModel.setValueAt(newTempoDeParada, selectedRow, 5);
                 tableModel.setValueAt(newTecnicoId, selectedRow, 6);
                 tableModel.setValueAt(newObservacoes, selectedRow, 7);
 
-                dialog.dispose(); // Fecha o diálogo
+                JOptionPane.showMessageDialog(dialog, "Alterações salvas com sucesso!");
+                dialog.dispose();
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(dialog, "Erro ao preencher os dados: " + ex.getMessage());
+                JOptionPane.showMessageDialog(dialog, "Erro ao salvar alterações: " + ex.getMessage());
             }
         });
 
-        // Exibe o diálogo
         dialog.setVisible(true);
-    } else {
-        JOptionPane.showMessageDialog(null, "Por favor, selecione uma linha para editar.");
     }
-});
 
-
+    private void gerarRelatorioDeManutencoes() {
+        // Obtendo a data atual no formato yyyy-MM-dd
+        String dataAtual = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        
+        // Criando a pasta "relatorio" se não existir
+        File pastaRelatorio = new File("relatorio");
+        if (!pastaRelatorio.exists()) {
+            pastaRelatorio.mkdir(); // Cria a pasta
+        }
+        
+        // Nome do arquivo incluindo a data
+        File file = new File(pastaRelatorio, "relatorio_manutencao_" + dataAtual + ".txt");
+    
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write("Relatório de Manutenções\n");
+            writer.write("------------------------\n");
+    
+            int totalTempoDeParada = 0; // Variável para armazenar o total de tempo de parada
+    
+            for (int i = 0; i < tableModel.getRowCount(); i++) {
+                writer.write("ID: " + tableModel.getValueAt(i, 0) + "\n");
+                writer.write("Máquina ID: " + tableModel.getValueAt(i, 1) + "\n");
+                writer.write("Data: " + tableModel.getValueAt(i, 2) + "\n");
+                writer.write("Tipo: " + tableModel.getValueAt(i, 3) + "\n");
+                writer.write("Peças Trocadas: " + tableModel.getValueAt(i, 4) + "\n");
+                int tempoDeParada = Integer.parseInt(tableModel.getValueAt(i, 5).toString());
+                writer.write("Tempo de Parada: " + tempoDeParada + " horas\n");
+                writer.write("Técnico ID: " + tableModel.getValueAt(i, 6) + "\n");
+                writer.write("Observações: " + tableModel.getValueAt(i, 7) + "\n");
+                writer.write("------------------------\n");
+                totalTempoDeParada += tempoDeParada; // Acumulando o tempo de parada
+            }
+    
+            writer.write("Total de Tempo de Inatividade: " + totalTempoDeParada + " horas\n"); // Exibe o total de inatividade
+    
+            JOptionPane.showMessageDialog(this, "Relatório gerado com sucesso: " + file.getAbsolutePath());
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao gerar relatório: " + e.getMessage());
+        }
     }
+    
 }

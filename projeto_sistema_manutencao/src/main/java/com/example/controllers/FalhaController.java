@@ -34,15 +34,16 @@ public List<Falha> readFalhas() {
 }
 
 
-    // Método para atualizar uma falha existente
-    public Falha updateFalha(Falha falha) {
-        Falha novaFalha = FalhaApi.updateFalha(falha);
-        if (novaFalha != null) {
-           // Atualiza a lista de máquinas após criar uma nova
-           readFalhas();
-       }
-       return novaFalha; // Retorna o objeto Maquina criado
-   }
+// Método para atualizar uma falha existente
+public String updateFalha(Falha falha) {
+    String response = FalhaApi.updateFalha(falha);
+    if (response != null) {
+        // Atualiza a lista de falhas após a modificação
+        readFalhas();
+    }
+    return response;
+}
+
 
     // Método para deletar uma falha pelo ID
     public String deleteFalha(String id) {

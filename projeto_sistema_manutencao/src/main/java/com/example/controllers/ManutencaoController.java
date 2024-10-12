@@ -39,22 +39,24 @@ public class ManutencaoController {
     }
 
     // Método para atualizar uma manutenção existente
-    public String updateManutencao(Manutencao manutencao) {
-        String response = ManutencaoApi.updateManutencao(manutencao);
-        if (response != null && response.equals("Success")) {
+    public boolean updateManutencao(Manutencao manutencao) {
+        // Chama o método de atualização na API
+        boolean success = ManutencaoApi.updateManutencao(manutencao);
+        if (success) {
             // Atualiza a lista de manutenções após a atualização
-            manutencoes = readManutencoes();
+            manutencoes = readManutencoes(); // Certifique-se de que readManutencoes retorna a lista atualizada
         }
-        return response; // Retorna a resposta da API
+        return success; // Retorna true se a atualização foi bem-sucedida
     }
 
     // Método para deletar uma manutenção pelo ID
-    public String deleteManutencao(String id) {
-        String response = ManutencaoApi.deleteManutencao(id);
-        if (response != null && response.equals("Success")) {
+    public boolean deleteManutencao(String id) {
+        // Chama a API para deletar a manutenção e armazena o resultado
+        boolean success = ManutencaoApi.deleteManutencao(id);
+        if (success) {
             // Atualiza a lista de manutenções após a exclusão
             manutencoes = readManutencoes();
         }
-        return response; // Retorna a resposta da API
+        return success; // Retorna true se a exclusão foi bem-sucedida
     }
 }

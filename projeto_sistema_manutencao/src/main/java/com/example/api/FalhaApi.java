@@ -80,7 +80,7 @@ public static Falha createFalha(Falha falha) {
 }
 
 // Método para atualizar uma falha existente no servidor
-public static Falha updateFalha(Falha falha) {
+public static String updateFalha(Falha falha) {
     // Cria um objeto JSON com os dados atualizados da falha
     JSONObject jsonObject = new JSONObject();
     jsonObject.put("maquinaId", falha.getMaquinaId());
@@ -93,25 +93,7 @@ public static Falha updateFalha(Falha falha) {
     String jsonPayload = jsonObject.toString();
 
     // Faz uma requisição PUT para atualizar a falha com o ID especificado
-    String responseJson = ApiConnection.putData("falhas/" + falha.getId(), jsonPayload);
-
-    // Verifica se a resposta não é nula e processa
-    if (responseJson != null) {
-        JSONObject response = new JSONObject(responseJson);
-        // Aqui você pode verificar se o ID está presente para confirmar que a atualização foi bem-sucedida
-        if (response.has("id")) {
-            // Retorna a falha atualizada como um objeto
-            return new Falha(
-                response.getString("id"),
-                response.getString("maquinaId"),
-                LocalDate.parse(response.getString("data")), // Converte para LocalDate
-                response.getString("problema"),
-                response.getString("prioridade"),
-                response.getString("operador")
-            );
-        }
-    }
-    return null; // Retorna nulo se houver algum erro
+    return ApiConnection.putData("falhas/" + falha.getId(), jsonPayload);
 }
 
 // Método para deletar uma falha no servidor com base no ID

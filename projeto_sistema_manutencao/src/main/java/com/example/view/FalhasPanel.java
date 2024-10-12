@@ -13,7 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.MouseInputAdapter;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.MouseEvent;
 
 import com.example.controllers.FalhaController; // Certifique-se de que o controlador está implementado
 import com.example.models.Falha; // Certifique-se de que a model está implementada
@@ -23,8 +25,8 @@ public class FalhasPanel extends JPanel {
     private FalhaController falhaController;
     private JTable falhasTable;
     private DefaultTableModel tableModel;
-    private JButton btnSalvarAlteracoes;
     private JButton btnCadastrarFalha;
+    private JButton btnSalvarAlteracoes;
 
     public FalhasPanel() {
         super(new BorderLayout());
@@ -33,12 +35,17 @@ public class FalhasPanel extends JPanel {
         falhaController = new FalhaController();
 
         // Inicializando o model da tabela com as colunas
-        tableModel = new DefaultTableModel(new Object[] {
+        tableModel = new DefaultTableModel(new Object[]{
                 "ID", "Máquina ID", "Data", "Problema", "Prioridade", "Operador"
         }, 0);  // Número de linhas inicial: 0
 
         // Criar JTable com o model
-        falhasTable = new JTable(tableModel);
+        falhasTable = new JTable(tableModel) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Desativa a edição nas células
+            }
+        };
 
         // Preenchendo a tabela com as falhas do controlador
         carregarFalhas();
@@ -57,13 +64,23 @@ public class FalhasPanel extends JPanel {
 
         // Adicionando ActionListeners para os botões
         addActionListeners();
+
+        // Adicionando MouseListener para a tabela
+        falhasTable.addMouseListener(new MouseInputAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) { // Verifica se foi um duplo clique
+                    editarFalha();
+                }
+            }
+        });
     }
 
     private void carregarFalhas() {
         // Recupera a lista de falhas e preenche a tabela
         List<Falha> falhas = falhaController.readFalhas(); // Supondo que o método readFalhas retorna uma lista de Falha
         for (Falha falha : falhas) {
-            tableModel.addRow(new Object[] {
+            tableModel.addRow(new Object[]{
                     falha.getId(),
                     falha.getMaquinaId(),
                     falha.getData().toString(),
@@ -226,7 +243,7 @@ public class FalhasPanel extends JPanel {
             // Mostra o formulário
             dialog.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(this, "Selecione uma falha para salvar alterações.");
+            JOptionPane.showMessageDialog(this, "Selecione uma falha para atualizar.");
         }
     }
 }
