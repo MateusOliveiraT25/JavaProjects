@@ -31,7 +31,6 @@ public class ManutencaoPanel extends JPanel {
     private DefaultTableModel tableModel;
     private JButton btnSalvarAlteracoes;
     private JButton btnCadastrarManutencao;
-    private JButton btnGerarRelatorio;
 
     public ManutencaoPanel() {
         super(new BorderLayout());
@@ -65,14 +64,14 @@ public class ManutencaoPanel extends JPanel {
         JScrollPane scrollPane = new JScrollPane(manutencoesTable);
         this.add(scrollPane, BorderLayout.CENTER);
 
+        // Criando painel inferior com botões
         JPanel painelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER));
         btnCadastrarManutencao = new JButton("Cadastrar");
         btnSalvarAlteracoes = new JButton("Atualizar");
-        btnGerarRelatorio = new JButton("Gerar Relatório");
         painelInferior.add(btnCadastrarManutencao);
         painelInferior.add(btnSalvarAlteracoes);
-        painelInferior.add(btnGerarRelatorio);
         this.add(painelInferior, BorderLayout.SOUTH);
+
 
         addActionListeners();
         addDoubleClickListener();
@@ -244,47 +243,11 @@ public class ManutencaoPanel extends JPanel {
         });
 
         dialog.setVisible(true);
+    } else {
+        JOptionPane.showMessageDialog(null, "Por favor, selecione uma linha para editar.");
     }
+});
 
-    private void gerarRelatorioDeManutencoes() {
-        // Obtendo a data atual no formato yyyy-MM-dd
-        String dataAtual = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        
-        // Criando a pasta "relatorio" se não existir
-        File pastaRelatorio = new File("relatorio");
-        if (!pastaRelatorio.exists()) {
-            pastaRelatorio.mkdir(); // Cria a pasta
-        }
-        
-        // Nome do arquivo incluindo a data
-        File file = new File(pastaRelatorio, "relatorio_manutencao_" + dataAtual + ".txt");
-    
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            writer.write("Relatório de Manutenções\n");
-            writer.write("------------------------\n");
-    
-            int totalTempoDeParada = 0; // Variável para armazenar o total de tempo de parada
-    
-            for (int i = 0; i < tableModel.getRowCount(); i++) {
-                writer.write("ID: " + tableModel.getValueAt(i, 0) + "\n");
-                writer.write("Máquina ID: " + tableModel.getValueAt(i, 1) + "\n");
-                writer.write("Data: " + tableModel.getValueAt(i, 2) + "\n");
-                writer.write("Tipo: " + tableModel.getValueAt(i, 3) + "\n");
-                writer.write("Peças Trocadas: " + tableModel.getValueAt(i, 4) + "\n");
-                int tempoDeParada = Integer.parseInt(tableModel.getValueAt(i, 5).toString());
-                writer.write("Tempo de Parada: " + tempoDeParada + " horas\n");
-                writer.write("Técnico ID: " + tableModel.getValueAt(i, 6) + "\n");
-                writer.write("Observações: " + tableModel.getValueAt(i, 7) + "\n");
-                writer.write("------------------------\n");
-                totalTempoDeParada += tempoDeParada; // Acumulando o tempo de parada
-            }
-    
-            writer.write("Total de Tempo de Inatividade: " + totalTempoDeParada + " horas\n"); // Exibe o total de inatividade
-    
-            JOptionPane.showMessageDialog(this, "Relatório gerado com sucesso: " + file.getAbsolutePath());
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Erro ao gerar relatório: " + e.getMessage());
-        }
+
     }
-    
 }
