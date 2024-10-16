@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.JButton;
@@ -247,44 +248,44 @@ public class ManutencaoPanel extends JPanel {
     }
 
     private void gerarRelatorioDeManutencoes() {
-        // Obtendo a data atual no formato yyyy-MM-dd
-        String dataAtual = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        
-        // Criando a pasta "relatorio" se não existir
-        File pastaRelatorio = new File("relatorio");
-        if (!pastaRelatorio.exists()) {
-            pastaRelatorio.mkdir(); // Cria a pasta
-        }
-        
-        // Nome do arquivo incluindo a data
-        File file = new File(pastaRelatorio, "relatorio_manutencao_" + dataAtual + ".txt");
+    // Obtendo a data e hora atual no formato yyyy-MM-dd_HH-mm-ss
+    String dataAtual = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    String horaAtual = LocalTime.now().format(DateTimeFormatter.ofPattern("HH-mm-ss"));
     
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            writer.write("Relatório de Manutenções\n");
-            writer.write("------------------------\n");
-    
-            int totalTempoDeParada = 0; // Variável para armazenar o total de tempo de parada
-    
-            for (int i = 0; i < tableModel.getRowCount(); i++) {
-                writer.write("ID: " + tableModel.getValueAt(i, 0) + "\n");
-                writer.write("Máquina ID: " + tableModel.getValueAt(i, 1) + "\n");
-                writer.write("Data: " + tableModel.getValueAt(i, 2) + "\n");
-                writer.write("Tipo: " + tableModel.getValueAt(i, 3) + "\n");
-                writer.write("Peças Trocadas: " + tableModel.getValueAt(i, 4) + "\n");
-                int tempoDeParada = Integer.parseInt(tableModel.getValueAt(i, 5).toString());
-                writer.write("Tempo de Parada: " + tempoDeParada + " horas\n");
-                writer.write("Técnico ID: " + tableModel.getValueAt(i, 6) + "\n");
-                writer.write("Observações: " + tableModel.getValueAt(i, 7) + "\n");
-                writer.write("------------------------\n");
-                totalTempoDeParada += tempoDeParada; // Acumulando o tempo de parada
-            }
-    
-            writer.write("Total de Tempo de Inatividade: " + totalTempoDeParada + " horas\n"); // Exibe o total de inatividade
-    
-            JOptionPane.showMessageDialog(this, "Relatório gerado com sucesso: " + file.getAbsolutePath());
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Erro ao gerar relatório: " + e.getMessage());
-        }
+    // Criando a pasta "relatorio" se não existir
+    File pastaRelatorio = new File("relatorio");
+    if (!pastaRelatorio.exists()) {
+        pastaRelatorio.mkdir(); // Cria a pasta
     }
     
+    // Nome do arquivo incluindo a data e a hora
+    File file = new File(pastaRelatorio, "relatorio_manutencao_" + dataAtual + "_" + horaAtual + ".txt");
+
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+        writer.write("Relatório de Manutenções\n");
+        writer.write("------------------------\n");
+
+        int totalTempoDeParada = 0; // Variável para armazenar o total de tempo de parada
+
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            writer.write("ID: " + tableModel.getValueAt(i, 0) + "\n");
+            writer.write("Máquina ID: " + tableModel.getValueAt(i, 1) + "\n");
+            writer.write("Data: " + tableModel.getValueAt(i, 2) + "\n");
+            writer.write("Tipo: " + tableModel.getValueAt(i, 3) + "\n");
+            int tempoDeParada = Integer.parseInt(tableModel.getValueAt(i, 5).toString());
+            writer.write("Tempo de Parada: " + tempoDeParada + " horas\n");
+            writer.write("Técnico ID: " + tableModel.getValueAt(i, 6) + "\n");
+            writer.write("Observações: " + tableModel.getValueAt(i, 7) + "\n");
+            writer.write("------------------------\n");
+            totalTempoDeParada += tempoDeParada; // Acumulando o tempo de parada
+        }
+
+        writer.write("Total de Tempo de Inatividade: " + totalTempoDeParada + " horas\n"); // Exibe o total de inatividade
+
+        JOptionPane.showMessageDialog(this, "Relatório gerado com sucesso: " + file.getAbsolutePath());
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(this, "Erro ao gerar relatório: " + e.getMessage());
+    }
+}
+
 }

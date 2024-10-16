@@ -115,7 +115,7 @@
       "data": "2024-10-08",
       "maquinaId": "1",
       "pecasTrocadas": "Rolamentos",
-      "tecnicoId": "Maria Oliveir",
+      "tecnicoId": "Maria Oliveira",
       "id": "2"
     },
     {
@@ -159,7 +159,7 @@
       "id": "617d"
     },
     {
-      "tempoDeParada": 3,
+      "tempoDeParada": 7,
       "observacoes": "r",
       "tipo": "rttt",
       "data": "2029-12-11",
@@ -177,6 +177,16 @@
       "pecasTrocadas": "3",
       "tecnicoId": "c",
       "id": "8c03"
+    },
+    {
+      "id": "585e",
+      "tempoDeParada": 33,
+      "observacoes": "ww",
+      "tipo": "23",
+      "data": "1999-12-01",
+      "maquinaId": "134e",
+      "pecasTrocadas": "2",
+      "tecnicoId": "Rr"
     }
   ],
   "falhas": [

@@ -4,7 +4,6 @@ ID: 1
 Máquina ID: 1rrrr
 Data: 2024-10-07
 Tipo: Preventiva
-Peças Trocadas: Correia
 Tempo de Parada: 4 horas
 Técnico ID: JoÃ£o Silva
 Observações: SubstituiÃ§Ã£o preventiva da correia.
@@ -13,7 +12,6 @@ ID: 2
 Máquina ID: 1
 Data: 2024-10-08
 Tipo: Corretiva
-Peças Trocadas: Rolamentos
 Tempo de Parada: 6 horas
 Técnico ID: Maria Oliveir
 Observações: SubstituiÃ§Ã£o do rolamento devido a desgaste.
@@ -22,7 +20,6 @@ ID: 39e0
 Máquina ID: 3x
 Data: 2000-11-12
 Tipo: te
-Peças Trocadas: e
 Tempo de Parada: 4 horas
 Técnico ID: F
 Observações: eee
@@ -31,7 +28,6 @@ ID: 2582
 Máquina ID: 124eeeyyyccc
 Data: 2020-10-22
 Tipo: 22
-Peças Trocadas: 22
 Tempo de Parada: 2 horas
 Técnico ID: trree
 Observações: 2
@@ -40,7 +36,6 @@ ID: 7481
 Máquina ID: 555qqq
 Data: 2000-11-12
 Tipo: 2
-Peças Trocadas: 2
 Tempo de Parada: 2 horas
 Técnico ID: desconhecido
 Observações: 2s
@@ -49,7 +44,6 @@ ID: 617d
 Máquina ID: 33
 Data: 2000-11-11
 Tipo: 22
-Peças Trocadas: 5
 Tempo de Parada: 2 horas
 Técnico ID: desconhecido
 Observações: 2ss
@@ -58,7 +52,6 @@ ID: a7b2
 Máquina ID: 123
 Data: 2029-12-11
 Tipo: rttt
-Peças Trocadas: 3
 Tempo de Parada: 3 horas
 Técnico ID: r
 Observações: r
@@ -67,7 +60,6 @@ ID: 8c03
 Máquina ID: 4552
 Data: 1990-10-11
 Tipo: qw
-Peças Trocadas: 3
 Tempo de Parada: 3 horas
 Técnico ID: c
 Observações: a
