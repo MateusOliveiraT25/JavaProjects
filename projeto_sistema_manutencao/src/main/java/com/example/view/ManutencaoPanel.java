@@ -95,7 +95,7 @@ public class ManutencaoPanel extends JPanel {
 
             dialog.add(new JLabel("Máquina ID:"));
             dialog.add(txtMaquinaId);
-            dialog.add(new JLabel("Data (yyyy-MM-dd):"));
+            dialog.add(new JLabel("Data (aaaa-MM-dd):"));
             dialog.add(txtData);
             dialog.add(new JLabel("Tipo:"));
             dialog.add(txtTipo);
@@ -193,7 +193,7 @@ public class ManutencaoPanel extends JPanel {
 
         dialog.add(new JLabel("Máquina ID:"));
         dialog.add(txtMaquinaId);
-        dialog.add(new JLabel("Data (yyyy-MM-dd):"));
+        dialog.add(new JLabel("Data (aaaa-MM-dd):"));
         dialog.add(txtData);
         dialog.add(new JLabel("Tipo:"));
         dialog.add(txtTipo);

@@ -95,6 +95,18 @@
       "dataAquisicao": "2002-10-08",
       "detalhes": "ww",
       "id": "223d"
+    },
+    {
+      "id": "dd43",
+      "tempoVidaEstimado": 10,
+      "codigo": "MCH-2024-001   ",
+      "localizacao": "F�brica A - Setor 3   ",
+      "nome": "Torno CNC   ",
+      "fabricante": "FANUC Corporation   ",
+      "manual": "https://example.com/manuals/torno_cnc_xyz9000.pdf   ",
+      "modelo": "CNC XYZ-9000   ",
+      "dataAquisicao": "2020-03-15",
+      "detalhes": "Torno autom�tico para pe�as cil�ndricas, com precis�o de 0.001mm.   "
     }
   ],
   "historicoManutencao": [
@@ -187,6 +199,16 @@
       "maquinaId": "134e",
       "pecasTrocadas": "2",
       "tecnicoId": "Rr"
+    },
+    {
+      "id": "7993",
+      "tempoDeParada": 123,
+      "observacoes": "Verificada necessidade de ajuste na lubrifica��o.   ",
+      "tipo": "Preventiva  ",
+      "data": "2024-10-10",
+      "maquinaId": "MCH-2024-001   ",
+      "pecasTrocadas": "Correia de transmiss�o, Rolamento ABC   ",
+      "tecnicoId": "TEC-9876"
     }
   ],
   "falhas": [

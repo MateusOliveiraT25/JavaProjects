@@ -115,7 +115,7 @@ public class FalhasPanel extends JPanel {
         // Adiciona rótulos e campos ao dialog
         dialog.add(new JLabel("Máquina ID:"));
         dialog.add(txtMaquinaId);
-        dialog.add(new JLabel("Data (yyyy-MM-dd):"));
+        dialog.add(new JLabel("Data (aaaa-MM-dd):"));
         dialog.add(txtData);
         dialog.add(new JLabel("Problema:"));
         dialog.add(txtProblema);
@@ -195,7 +195,7 @@ public class FalhasPanel extends JPanel {
             // Adiciona rótulos e campos ao dialog
             dialog.add(new JLabel("Máquina ID:"));
             dialog.add(txtMaquinaId);
-            dialog.add(new JLabel("Data (yyyy-MM-dd):"));
+            dialog.add(new JLabel("Data (aaaa-MM-dd):"));
             dialog.add(txtData);
             dialog.add(new JLabel("Problema:"));
             dialog.add(txtProblema);

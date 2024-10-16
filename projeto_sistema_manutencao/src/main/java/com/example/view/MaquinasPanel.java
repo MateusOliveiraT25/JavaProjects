@@ -100,7 +100,7 @@ public class MaquinasPanel extends JPanel {
             JDialog dialog = new JDialog((JDialog) null, "Cadastrar Nova Máquina", true);
             dialog.setSize(400, 400);
             dialog.setLayout(new GridLayout(0, 2));
-
+    
             // Adiciona campos de texto para os atributos da máquina
             JTextField txtCodigo = new JTextField();
             JTextField txtNome = new JTextField();
@@ -111,7 +111,7 @@ public class MaquinasPanel extends JPanel {
             JTextField txtLocalizacao = new JTextField();
             JTextField txtDetalhes = new JTextField();
             JTextField txtManual = new JTextField();
-
+    
             // Adiciona rótulos e campos ao dialog
             dialog.add(new JLabel("Código:"));
             dialog.add(txtCodigo);
@@ -121,7 +121,7 @@ public class MaquinasPanel extends JPanel {
             dialog.add(txtModelo);
             dialog.add(new JLabel("Fabricante:"));
             dialog.add(txtFabricante);
-            dialog.add(new JLabel("Data de Aquisição (yyyy-MM-dd):"));
+            dialog.add(new JLabel("Data de Aquisição (aaaa-MM-dd):"));
             dialog.add(txtDataAquisicao);
             dialog.add(new JLabel("Tempo de Vida Estimado:"));
             dialog.add(txtTempoVidaEstimado);
@@ -131,32 +131,43 @@ public class MaquinasPanel extends JPanel {
             dialog.add(txtDetalhes);
             dialog.add(new JLabel("Manual (link ou descrição):"));
             dialog.add(txtManual);
-
+    
             // Botão para cadastrar a máquina
             JButton btnSubmit = new JButton("Cadastrar");
             dialog.add(btnSubmit);
-
+    
             // Quando o botão for clicado, valida e envia os dados
             btnSubmit.addActionListener(ev -> {
                 try {
                     // Recupera os dados dos campos de texto
-                    String codigo = txtCodigo.getText();
-                    String nome = txtNome.getText();
-                    String modelo = txtModelo.getText();
-                    String fabricante = txtFabricante.getText();
-                    LocalDate dataAquisicao = LocalDate.parse(txtDataAquisicao.getText()); // Valida data
-                    int tempoVidaEstimado = Integer.parseInt(txtTempoVidaEstimado.getText());
-                    String localizacao = txtLocalizacao.getText();
-                    String detalhes = txtDetalhes.getText();
-                    String manual = txtManual.getText();
-
+                    String codigo = txtCodigo.getText().trim();
+                    String nome = txtNome.getText().trim();
+                    String modelo = txtModelo.getText().trim();
+                    String fabricante = txtFabricante.getText().trim();
+                    String dataAquisicaoStr = txtDataAquisicao.getText().trim();
+                    LocalDate dataAquisicao;
+                    try {
+                        dataAquisicao = LocalDate.parse(dataAquisicaoStr); // Valida data
+                    } catch (Exception ex) {
+                        throw new IllegalArgumentException("Data de aquisição inválida. Formato esperado: aaaa-MM-dd.");
+                    }
+                    int tempoVidaEstimado;
+                    try {
+                        tempoVidaEstimado = Integer.parseInt(txtTempoVidaEstimado.getText().trim());
+                    } catch (NumberFormatException ex) {
+                        throw new IllegalArgumentException("Tempo de vida estimado deve ser um número inteiro.");
+                    }
+                    String localizacao = txtLocalizacao.getText().trim();
+                    String detalhes = txtDetalhes.getText().trim();
+                    String manual = txtManual.getText().trim();
+    
                     // Cria um novo objeto Maquina
                     Maquina novaMaquina = new Maquina(null, codigo, nome, modelo, fabricante, dataAquisicao, tempoVidaEstimado,
                             localizacao, detalhes, manual);
-
+    
                     // Envia para a API
                     Maquina maquinaCriada = maquinaController.createMaquina(novaMaquina);
-
+    
                     // Se a máquina criada não for nula, atualiza a tabela e fecha o diálogo
                     if (maquinaCriada != null) {
                         tableModel.addRow(new Object[]{
@@ -167,17 +178,19 @@ public class MaquinasPanel extends JPanel {
                         JOptionPane.showMessageDialog(dialog, "Máquina cadastrada com sucesso!");
                         dialog.dispose(); // Fecha o diálogo
                     } else {
-                        JOptionPane.showMessageDialog(dialog, "Erro ao cadastrar máquina.");
+                        JOptionPane.showMessageDialog(dialog, "Erro ao cadastrar máquina. Verifique os dados.");
                     }
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(dialog, "Erro: " + ex.getMessage());
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(dialog, "Erro ao preencher os dados: " + ex.getMessage());
+                    JOptionPane.showMessageDialog(dialog, "Erro inesperado: " + ex.getMessage());
                 }
             });
-
+    
             // Mostra o formulário
             dialog.setVisible(true);
         });
-
+    
         // ActionListener para o botão "Salvar"
         btnSalvarAlteracoes.addActionListener(e -> {
             // Verifica se uma linha está selecionada
@@ -189,13 +202,13 @@ public class MaquinasPanel extends JPanel {
             }
         });
     }
-
+    
     private void editMaquina(int selectedRow) {
         // Cria um novo JDialog para editar a máquina
         JDialog dialog = new JDialog((JDialog) null, "Editar Máquina", true);
         dialog.setSize(400, 400);
         dialog.setLayout(new GridLayout(0, 2));
-
+    
         // Pega os valores da linha selecionada
         String id = String.valueOf(tableModel.getValueAt(selectedRow, 0)); // ID da máquina
         String codigo = (String) tableModel.getValueAt(selectedRow, 1);
@@ -207,7 +220,7 @@ public class MaquinasPanel extends JPanel {
         String localizacao = (String) tableModel.getValueAt(selectedRow, 7);
         String detalhes = (String) tableModel.getValueAt(selectedRow, 8);
         String manual = (String) tableModel.getValueAt(selectedRow, 9);
-
+    
         // Adiciona campos de texto para os atributos da máquina
         JTextField txtCodigo = new JTextField(codigo);
         JTextField txtNome = new JTextField(nome);
@@ -218,7 +231,7 @@ public class MaquinasPanel extends JPanel {
         JTextField txtLocalizacao = new JTextField(localizacao);
         JTextField txtDetalhes = new JTextField(detalhes);
         JTextField txtManual = new JTextField(manual);
-
+    
         // Adiciona rótulos e campos ao dialog
         dialog.add(new JLabel("Código:"));
         dialog.add(txtCodigo);
@@ -228,7 +241,7 @@ public class MaquinasPanel extends JPanel {
         dialog.add(txtModelo);
         dialog.add(new JLabel("Fabricante:"));
         dialog.add(txtFabricante);
-        dialog.add(new JLabel("Data de Aquisição (yyyy-MM-dd):"));
+        dialog.add(new JLabel("Data de Aquisição (aaaa-MM-dd):"));
         dialog.add(txtDataAquisicao);
         dialog.add(new JLabel("Tempo de Vida Estimado:"));
         dialog.add(txtTempoVidaEstimado);
@@ -238,35 +251,46 @@ public class MaquinasPanel extends JPanel {
         dialog.add(txtDetalhes);
         dialog.add(new JLabel("Manual (link ou descrição):"));
         dialog.add(txtManual);
-
+    
         // Botão para salvar as alterações
         JButton btnSubmit = new JButton("Salvar");
         dialog.add(btnSubmit);
-
+    
         // Quando o botão "Salvar" for clicado, valida e envia os dados
         btnSubmit.addActionListener(ev -> {
             try {
                 // Recupera os dados dos campos de texto
-                String newCodigo = txtCodigo.getText();
-                String newNome = txtNome.getText();
-                String newModelo = txtModelo.getText();
-                String newFabricante = txtFabricante.getText();
-                LocalDate newDataAquisicao = LocalDate.parse(txtDataAquisicao.getText());
-                int newTempoVidaEstimado = Integer.parseInt(txtTempoVidaEstimado.getText());
-                String newLocalizacao = txtLocalizacao.getText();
-                String newDetalhes = txtDetalhes.getText();
-                String newManual = txtManual.getText();
-
+                String newCodigo = txtCodigo.getText().trim();
+                String newNome = txtNome.getText().trim();
+                String newModelo = txtModelo.getText().trim();
+                String newFabricante = txtFabricante.getText().trim();
+                String newDataAquisicaoStr = txtDataAquisicao.getText().trim();
+                LocalDate newDataAquisicao;
+                try {
+                    newDataAquisicao = LocalDate.parse(newDataAquisicaoStr);
+                } catch (Exception ex) {
+                    throw new IllegalArgumentException("Data de aquisição inválida. Formato esperado: aaaa-MM-dd.");
+                }
+                int newTempoVidaEstimado;
+                try {
+                    newTempoVidaEstimado = Integer.parseInt(txtTempoVidaEstimado.getText().trim());
+                } catch (NumberFormatException ex) {
+                    throw new IllegalArgumentException("Tempo de vida estimado deve ser um número inteiro.");
+                }
+                String newLocalizacao = txtLocalizacao.getText().trim();
+                String newDetalhes = txtDetalhes.getText().trim();
+                String newManual = txtManual.getText().trim();
+    
                 // Atualiza os dados da máquina
                 Maquina maquinaAtualizada = new Maquina(id, newCodigo, newNome, newModelo, newFabricante,
                         newDataAquisicao, newTempoVidaEstimado, newLocalizacao, newDetalhes, newManual);
-
+    
                 // Envia para a API para atualizar a máquina
                 maquinaController.updateMaquina(maquinaAtualizada); // Supondo que esse método não retorne nada
-
+    
                 // Exibe mensagem de sucesso
                 JOptionPane.showMessageDialog(dialog, "Alterações salvas com sucesso!");
-
+    
                 // Atualiza a tabela para refletir as mudanças
                 tableModel.setValueAt(newCodigo, selectedRow, 1);
                 tableModel.setValueAt(newNome, selectedRow, 2);
@@ -277,14 +301,16 @@ public class MaquinasPanel extends JPanel {
                 tableModel.setValueAt(newLocalizacao, selectedRow, 7);
                 tableModel.setValueAt(newDetalhes, selectedRow, 8);
                 tableModel.setValueAt(newManual, selectedRow, 9);
-
+    
                 dialog.dispose(); // Fecha o diálogo
+            } catch (IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(dialog, "Erro: " + ex.getMessage());
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(dialog, "Erro ao preencher os dados: " + ex.getMessage());
+                JOptionPane.showMessageDialog(dialog, "Erro inesperado: " + ex.getMessage());
             }
         });
-
+    
         // Mostra o formulário
         dialog.setVisible(true);
     }
-}
+}    
