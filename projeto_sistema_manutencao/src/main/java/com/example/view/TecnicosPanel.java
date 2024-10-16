@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -99,13 +98,18 @@ public class TecnicosPanel extends JPanel {
         btnCadastrarTecnico.addActionListener(e -> {
             // Cria um novo JDialog para o cadastro de técnico
             JDialog dialog = new JDialog((JDialog) null, "Cadastrar Novo Técnico", true);
-            dialog.setSize(400, 400);
+            dialog.setSize(400, 300); // Dimensões do diálogo
             dialog.setLayout(new GridLayout(0, 2));
 
             // Adiciona campos de texto para os atributos do técnico
             JTextField txtNome = new JTextField();
             JTextField txtEspecialidade = new JTextField();
             JTextField txtDisponibilidade = new JTextField();
+
+            // Define a altura dos campos
+            txtNome.setPreferredSize(new java.awt.Dimension(150, 25));
+            txtEspecialidade.setPreferredSize(new java.awt.Dimension(150, 25));
+            txtDisponibilidade.setPreferredSize(new java.awt.Dimension(150, 25));
 
             // Adiciona rótulos e campos ao dialog
             dialog.add(new JLabel("Nome:"));
@@ -117,15 +121,22 @@ public class TecnicosPanel extends JPanel {
 
             // Botão para cadastrar o técnico
             JButton btnSubmit = new JButton("Cadastrar");
+            btnSubmit.setPreferredSize(new java.awt.Dimension(150, 25)); // Define a altura do botão
             dialog.add(btnSubmit);
 
             // Quando o botão for clicado, valida e envia os dados
             btnSubmit.addActionListener(ev -> {
                 try {
                     // Recupera os dados dos campos de texto
-                    String nome = txtNome.getText();
-                    String especialidade = txtEspecialidade.getText();
-                    String disponibilidade = txtDisponibilidade.getText();
+                    String nome = txtNome.getText().trim();
+                    String especialidade = txtEspecialidade.getText().trim();
+                    String disponibilidade = txtDisponibilidade.getText().trim();
+
+                    // Validação básica
+                    if (nome.isEmpty() || especialidade.isEmpty() || disponibilidade.isEmpty()) {
+                        JOptionPane.showMessageDialog(dialog, "Todos os campos são obrigatórios!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
 
                     // Cria um novo objeto Tecnico
                     Tecnico novoTecnico = new Tecnico(null, nome, especialidade, disponibilidade);
@@ -144,10 +155,10 @@ public class TecnicosPanel extends JPanel {
                         JOptionPane.showMessageDialog(dialog, "Técnico cadastrado com sucesso!");
                         dialog.dispose(); // Fecha o diálogo
                     } else {
-                        JOptionPane.showMessageDialog(dialog, "Erro ao cadastrar técnico.");
+                        JOptionPane.showMessageDialog(dialog, "Erro ao cadastrar técnico.", "Erro", JOptionPane.ERROR_MESSAGE);
                     }
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(dialog, "Erro ao preencher os dados: " + ex.getMessage());
+                    JOptionPane.showMessageDialog(dialog, "Erro ao cadastrar técnico: " + ex.getMessage(), "Erro Inesperado", JOptionPane.ERROR_MESSAGE);
                 }
             });
 
@@ -162,10 +173,11 @@ public class TecnicosPanel extends JPanel {
             if (selectedRow != -1) {
                 editarTecnico(); // Chama o método de edição
             } else {
-                JOptionPane.showMessageDialog(this, "Selecione um técnico para salvar alterações.");
+                JOptionPane.showMessageDialog(this, "Selecione um técnico para salvar alterações.", "Erro de Seleção", JOptionPane.WARNING_MESSAGE);
             }
         });
 
+        // ActionListener para o botão "Deletar"
         btnDeletarTecnico.addActionListener(e -> {
             // Verifica se uma linha está selecionada
             int selectedRow = tecnicoTable.getSelectedRow();
@@ -185,19 +197,23 @@ public class TecnicosPanel extends JPanel {
 
                 // Verifica se o usuário clicou em "Sim"
                 if (confirm == 0) { // 0 corresponde a "Sim"
-                    // Recupera o ID do técnico selecionado
-                    String id = String.valueOf(tableModel.getValueAt(selectedRow, 0));
+                    try {
+                        // Recupera o ID do técnico selecionado
+                        String id = String.valueOf(tableModel.getValueAt(selectedRow, 0));
 
-                    // Envia para o controlador para deletar o técnico
-                    tecnicoController.deleteTecnico(id); // Supondo que esse método realiza a exclusão
+                        // Envia para o controlador para deletar o técnico
+                        tecnicoController.deleteTecnico(id); // Supondo que esse método realiza a exclusão
 
-                    // Remove a linha da tabela
-                    tableModel.removeRow(selectedRow);
+                        // Remove a linha da tabela
+                        tableModel.removeRow(selectedRow);
 
-                    JOptionPane.showMessageDialog(this, "Técnico deletado com sucesso!");
+                        JOptionPane.showMessageDialog(this, "Técnico deletado com sucesso!");
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(this, "Erro ao deletar técnico: " + ex.getMessage(), "Erro Inesperado", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Selecione um técnico para deletar.");
+                JOptionPane.showMessageDialog(this, "Selecione um técnico para deletar.", "Erro de Seleção", JOptionPane.WARNING_MESSAGE);
             }
         });
     }
@@ -208,7 +224,7 @@ public class TecnicosPanel extends JPanel {
         if (selectedRow != -1) {
             // Cria um novo JDialog para editar o técnico
             JDialog dialog = new JDialog((JDialog) null, "Editar Técnico", true);
-            dialog.setSize(400, 400);
+            dialog.setSize(300, 300);
             dialog.setLayout(new GridLayout(0, 2));
 
             // Pega os valores da linha selecionada
@@ -222,6 +238,11 @@ public class TecnicosPanel extends JPanel {
             JTextField txtEspecialidade = new JTextField(especialidade);
             JTextField txtDisponibilidade = new JTextField(disponibilidade);
 
+            // Define a altura dos campos
+            txtNome.setPreferredSize(new java.awt.Dimension(150, 25));
+            txtEspecialidade.setPreferredSize(new java.awt.Dimension(150, 25));
+            txtDisponibilidade.setPreferredSize(new java.awt.Dimension(150, 25));
+
             // Adiciona rótulos e campos ao dialog
             dialog.add(new JLabel("Nome:"));
             dialog.add(txtNome);
@@ -232,15 +253,22 @@ public class TecnicosPanel extends JPanel {
 
             // Botão para salvar as alterações
             JButton btnSubmit = new JButton("Salvar");
+            btnSubmit.setPreferredSize(new java.awt.Dimension(150, 25)); // Define a altura do botão
             dialog.add(btnSubmit);
 
             // Quando o botão for clicado, valida e envia os dados
             btnSubmit.addActionListener(ev -> {
                 try {
                     // Recupera os dados dos campos de texto
-                    String novoNome = txtNome.getText();
-                    String novaEspecialidade = txtEspecialidade.getText();
-                    String novaDisponibilidade = txtDisponibilidade.getText();
+                    String novoNome = txtNome.getText().trim();
+                    String novaEspecialidade = txtEspecialidade.getText().trim();
+                    String novaDisponibilidade = txtDisponibilidade.getText().trim();
+
+                    // Validação básica
+                    if (novoNome.isEmpty() || novaEspecialidade.isEmpty() || novaDisponibilidade.isEmpty()) {
+                        JOptionPane.showMessageDialog(dialog, "Todos os campos são obrigatórios!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
 
                     // Atualiza os dados do técnico
                     Tecnico tecnicoAtualizado = new Tecnico(id, novoNome, novaEspecialidade, novaDisponibilidade);
@@ -254,14 +282,14 @@ public class TecnicosPanel extends JPanel {
                     JOptionPane.showMessageDialog(dialog, "Técnico atualizado com sucesso!");
                     dialog.dispose(); // Fecha o diálogo
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(dialog, "Erro ao atualizar os dados: " + ex.getMessage());
+                    JOptionPane.showMessageDialog(dialog, "Erro ao atualizar os dados: " + ex.getMessage(), "Erro Inesperado", JOptionPane.ERROR_MESSAGE);
                 }
             });
 
             // Mostra o formulário
             dialog.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(this, "Selecione um técnico para editar.");
+            JOptionPane.showMessageDialog(this, "Selecione um técnico para editar.", "Erro de Seleção", JOptionPane.WARNING_MESSAGE);
         }
     }
 }

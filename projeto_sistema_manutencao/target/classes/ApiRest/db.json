@@ -209,6 +209,16 @@
       "maquinaId": "MCH-2024-001   ",
       "pecasTrocadas": "Correia de transmiss�o, Rolamento ABC   ",
       "tecnicoId": "TEC-9876"
+    },
+    {
+      "id": "d171",
+      "tempoDeParada": 5,
+      "observacoes": "tt",
+      "tipo": "tt",
+      "data": "2002-11-27",
+      "maquinaId": "tt",
+      "pecasTrocadas": "5",
+      "tecnicoId": "tt"
     }
   ],
   "falhas": [
@@ -243,26 +253,22 @@
       "problema": "ee444",
       "operador": "2sss",
       "id": "4c92"
+    },
+    {
+      "id": "b842",
+      "data": "2000-10-20",
+      "prioridade": "3",
+      "maquinaId": "223",
+      "problema": "33",
+      "operador": "3"
     }
   ],
   "tecnicos": [
-    {
-      "especialidade": "Mec�nica",
-      "disponibilidade": "dispon�vel",
-      "nome": "Mariawww",
-      "id": "ced1"
-    },
     {
       "especialidade": "Eletr�nica",
       "disponibilidade": "Dispon�vel",
       "nome": "Carloswww",
       "id": "289e"
-    },
-    {
-      "especialidade": "Mec�nica",
-      "disponibilidade": "Indispon�velddd",
-      "nome": "Henri",
-      "id": "1ea4"
     },
     {
       "id": "c1df",
@@ -295,10 +301,16 @@
       "nome": "Joao"
     },
     {
-      "id": "710f",
-      "especialidade": "Mecanico",
+      "id": "873f",
+      "especialidade": "Mecanica",
+      "disponibilidade": "ocupado",
+      "nome": "Mariana"
+    },
+    {
+      "especialidade": "Eletrica",
       "disponibilidade": "Disponivel",
-      "nome": "Joao"
+      "nome": "Carlos",
+      "id": "f76e"
     }
   ]
 }

@@ -2,6 +2,8 @@ package com.example.view;
 
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class SistemaManutencaoGUI extends JFrame {
     private JTabbedPane tabbedPane;
@@ -41,7 +43,56 @@ public class SistemaManutencaoGUI extends JFrame {
         tabbedPane.add("Falhas", painelFalhas);
         tabbedPane.add("Técnicos", painelTecnicos);
 
+        // Adiciona o ChangeListener ao tabbedPane
+        tabbedPane.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int selectedIndex = tabbedPane.getSelectedIndex();
+                inverterCores(selectedIndex);
+            }
+        });
+
         this.add(tabbedPane, BorderLayout.CENTER);
+    }
+
+    private void inverterCores(int index) {
+        // Cores originais
+        Color[] coresOriginais = {
+            new Color(50, 50, 50),  // Painel Máquinas
+            new Color(70, 70, 70),  // Painel Manutenções
+            new Color(60, 60, 60),  // Painel Falhas
+            new Color(80, 80, 80)   // Painel Técnicos
+        };
+
+        // Cores invertidas
+        Color[] coresInvertidas = {
+            new Color(200, 200, 200), // Invertido para Painel Máquinas
+            new Color(180, 180, 180), // Invertido para Painel Manutenções
+            new Color(190, 190, 190), // Invertido para Painel Falhas
+            new Color(170, 170, 170)  // Invertido para Painel Técnicos
+        };
+
+        // Restaura as cores originais
+        painelMaquinas.setBackground(coresOriginais[0]);
+        painelManutencao.setBackground(coresOriginais[1]);
+        painelFalhas.setBackground(coresOriginais[2]);
+        painelTecnicos.setBackground(coresOriginais[3]);
+
+        // Inverte a cor do painel selecionado
+        switch (index) {
+            case 0:
+                painelMaquinas.setBackground(coresInvertidas[0]);
+                break;
+            case 1:
+                painelManutencao.setBackground(coresInvertidas[1]);
+                break;
+            case 2:
+                painelFalhas.setBackground(coresInvertidas[2]);
+                break;
+            case 3:
+                painelTecnicos.setBackground(coresInvertidas[3]);
+                break;
+        }
     }
 
 }

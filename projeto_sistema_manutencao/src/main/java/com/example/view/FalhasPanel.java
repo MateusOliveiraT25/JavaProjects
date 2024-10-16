@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -94,24 +95,24 @@ public class FalhasPanel extends JPanel {
     private void addActionListeners() {
         // ActionListener para o botão "Cadastrar"
         btnCadastrarFalha.addActionListener(e -> abrirDialogCadastro());
-
+    
         // ActionListener para o botão "Salvar"
         btnSalvarAlteracoes.addActionListener(e -> editarFalha());
     }
-
+    
     private void abrirDialogCadastro() {
         // Cria um novo JDialog para o cadastro de falha
         JDialog dialog = new JDialog((JDialog) null, "Cadastrar Nova Falha", true);
         dialog.setSize(400, 400);
         dialog.setLayout(new GridLayout(0, 2));
-
+    
         // Adiciona campos de texto para os atributos da falha
         JTextField txtMaquinaId = new JTextField();
         JTextField txtData = new JTextField(); // Sugere formato "yyyy-MM-dd"
         JTextField txtProblema = new JTextField();
         JTextField txtPrioridade = new JTextField();
         JTextField txtOperador = new JTextField();
-
+    
         // Adiciona rótulos e campos ao dialog
         dialog.add(new JLabel("Máquina ID:"));
         dialog.add(txtMaquinaId);
@@ -123,27 +124,33 @@ public class FalhasPanel extends JPanel {
         dialog.add(txtPrioridade);
         dialog.add(new JLabel("Operador:"));
         dialog.add(txtOperador);
-
+    
         // Botão para cadastrar a falha
         JButton btnSubmit = new JButton("Cadastrar");
         dialog.add(btnSubmit);
-
+    
         // Quando o botão for clicado, valida e envia os dados
         btnSubmit.addActionListener(ev -> {
             try {
                 // Recupera os dados dos campos de texto
-                String maquinaId = txtMaquinaId.getText();
-                LocalDate data = LocalDate.parse(txtData.getText());
-                String problema = txtProblema.getText();
-                String prioridade = txtPrioridade.getText();
-                String operador = txtOperador.getText();
-
+                String maquinaId = txtMaquinaId.getText().trim();
+                LocalDate data = LocalDate.parse(txtData.getText().trim());
+                String problema = txtProblema.getText().trim();
+                String prioridade = txtPrioridade.getText().trim();
+                String operador = txtOperador.getText().trim();
+    
+                // Validação básica
+                if (maquinaId.isEmpty() || problema.isEmpty() || prioridade.isEmpty() || operador.isEmpty()) {
+                    JOptionPane.showMessageDialog(dialog, "Todos os campos são obrigatórios!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+    
                 // Cria um novo objeto Falha
                 Falha novaFalha = new Falha(null, maquinaId, data, problema, prioridade, operador);
-
+    
                 // Envia para a API
                 Falha falhaCriada = falhaController.createFalha(novaFalha);
-
+    
                 // Se a falha criada não for nula, atualiza a tabela e fecha o diálogo
                 if (falhaCriada != null) {
                     tableModel.addRow(new Object[]{
@@ -157,17 +164,20 @@ public class FalhasPanel extends JPanel {
                     JOptionPane.showMessageDialog(dialog, "Falha cadastrada com sucesso!");
                     dialog.dispose(); // Fecha o diálogo
                 } else {
-                    JOptionPane.showMessageDialog(dialog, "Erro ao cadastrar falha.");
+                    JOptionPane.showMessageDialog(dialog, "Erro ao cadastrar falha. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
+            } catch (DateTimeParseException dtpe) {
+                JOptionPane.showMessageDialog(dialog, "Data inválida. Use o formato aaaa-MM-dd.", "Erro de Formato", JOptionPane.ERROR_MESSAGE);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(dialog, "Erro ao preencher os dados: " + ex.getMessage());
+                JOptionPane.showMessageDialog(dialog, "Erro ao preencher os dados: " + ex.getMessage(), "Erro Inesperado", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace(); // Log adicional para debugging
             }
         });
-
+    
         // Mostra o formulário
         dialog.setVisible(true);
     }
-
+    
     private void editarFalha() {
         // Verifica se uma linha está selecionada
         int selectedRow = falhasTable.getSelectedRow();
@@ -176,7 +186,7 @@ public class FalhasPanel extends JPanel {
             JDialog dialog = new JDialog((JDialog) null, "Editar Falha", true);
             dialog.setSize(400, 400);
             dialog.setLayout(new GridLayout(0, 2));
-
+    
             // Pega os valores da linha selecionada
             String id = String.valueOf(tableModel.getValueAt(selectedRow, 0)); // ID da falha
             String maquinaId = (String) tableModel.getValueAt(selectedRow, 1);
@@ -184,14 +194,14 @@ public class FalhasPanel extends JPanel {
             String problema = (String) tableModel.getValueAt(selectedRow, 3);
             String prioridade = (String) tableModel.getValueAt(selectedRow, 4);
             String operador = (String) tableModel.getValueAt(selectedRow, 5);
-
+    
             // Adiciona campos de texto para os atributos da falha
             JTextField txtMaquinaId = new JTextField(maquinaId);
             JTextField txtData = new JTextField(data.toString()); // Formato "yyyy-MM-dd"
             JTextField txtProblema = new JTextField(problema);
             JTextField txtPrioridade = new JTextField(prioridade);
             JTextField txtOperador = new JTextField(operador);
-
+    
             // Adiciona rótulos e campos ao dialog
             dialog.add(new JLabel("Máquina ID:"));
             dialog.add(txtMaquinaId);
@@ -203,47 +213,56 @@ public class FalhasPanel extends JPanel {
             dialog.add(txtPrioridade);
             dialog.add(new JLabel("Operador:"));
             dialog.add(txtOperador);
-
+    
             // Botão para salvar as alterações
             JButton btnSubmit = new JButton("Salvar");
             dialog.add(btnSubmit);
-
+    
             // Quando o botão "Salvar" for clicado, valida e envia os dados
             btnSubmit.addActionListener(ev -> {
                 try {
                     // Recupera os dados dos campos de texto
-                    String newMaquinaId = txtMaquinaId.getText();
-                    LocalDate newData = LocalDate.parse(txtData.getText());
-                    String newProblema = txtProblema.getText();
-                    String newPrioridade = txtPrioridade.getText();
-                    String newOperador = txtOperador.getText();
-
+                    String newMaquinaId = txtMaquinaId.getText().trim();
+                    LocalDate newData = LocalDate.parse(txtData.getText().trim());
+                    String newProblema = txtProblema.getText().trim();
+                    String newPrioridade = txtPrioridade.getText().trim();
+                    String newOperador = txtOperador.getText().trim();
+    
+                    // Validação básica
+                    if (newMaquinaId.isEmpty() || newProblema.isEmpty() || newPrioridade.isEmpty() || newOperador.isEmpty()) {
+                        JOptionPane.showMessageDialog(dialog, "Todos os campos são obrigatórios!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+    
                     // Atualiza os dados da falha
                     Falha falhaAtualizada = new Falha(id, newMaquinaId, newData, newProblema, newPrioridade, newOperador);
-
+    
                     // Envia para a API para atualizar a falha
                     falhaController.updateFalha(falhaAtualizada); // Supondo que esse método não retorne nada
-
+    
                     // Exibe mensagem de sucesso
                     JOptionPane.showMessageDialog(dialog, "Alterações salvas com sucesso!");
-
+    
                     // Atualiza a tabela para refletir as mudanças
                     tableModel.setValueAt(newMaquinaId, selectedRow, 1);
                     tableModel.setValueAt(newData.toString(), selectedRow, 2);
                     tableModel.setValueAt(newProblema, selectedRow, 3);
                     tableModel.setValueAt(newPrioridade, selectedRow, 4);
                     tableModel.setValueAt(newOperador, selectedRow, 5);
-
+    
                     dialog.dispose(); // Fecha o diálogo
+                } catch (DateTimeParseException dtpe) {
+                    JOptionPane.showMessageDialog(dialog, "Data inválida. Use o formato aaaa-MM-dd.", "Erro de Formato", JOptionPane.ERROR_MESSAGE);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(dialog, "Erro ao preencher os dados: " + ex.getMessage());
+                    JOptionPane.showMessageDialog(dialog, "Erro ao preencher os dados: " + ex.getMessage(), "Erro Inesperado", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace(); // Log adicional para debugging
                 }
             });
-
+    
             // Mostra o formulário
             dialog.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "Selecione uma falha para atualizar.");
         }
     }
-}
+}    

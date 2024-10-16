@@ -10,9 +10,11 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -84,7 +86,7 @@ public class ManutencaoPanel extends JPanel {
             JDialog dialog = new JDialog((JDialog) null, "Cadastrar Nova Manutenção", true);
             dialog.setSize(400, 400);
             dialog.setLayout(new GridLayout(0, 2));
-
+    
             JTextField txtMaquinaId = new JTextField();
             JTextField txtData = new JTextField(); // Formato "yyyy-MM-dd"
             JTextField txtTipo = new JTextField();
@@ -92,7 +94,7 @@ public class ManutencaoPanel extends JPanel {
             JTextField txtTempoDeParada = new JTextField();
             JTextField txtTecnicoId = new JTextField();
             JTextField txtObservacoes = new JTextField();
-
+    
             dialog.add(new JLabel("Máquina ID:"));
             dialog.add(txtMaquinaId);
             dialog.add(new JLabel("Data (aaaa-MM-dd):"));
@@ -107,23 +109,29 @@ public class ManutencaoPanel extends JPanel {
             dialog.add(txtTecnicoId);
             dialog.add(new JLabel("Observações:"));
             dialog.add(txtObservacoes);
-
+    
             JButton btnSubmit = new JButton("Cadastrar");
             dialog.add(btnSubmit);
-
+    
             btnSubmit.addActionListener(ev -> {
                 try {
-                    String maquinaId = txtMaquinaId.getText();
-                    LocalDate data = LocalDate.parse(txtData.getText());
-                    String tipo = txtTipo.getText();
-                    String pecasTrocadas = txtPecasTrocadas.getText();
-                    int tempoDeParada = Integer.parseInt(txtTempoDeParada.getText());
-                    String tecnicoId = txtTecnicoId.getText();
-                    String observacoes = txtObservacoes.getText();
-
+                    String maquinaId = txtMaquinaId.getText().trim();
+                    LocalDate data = LocalDate.parse(txtData.getText().trim()); // Pode lançar DateTimeParseException
+                    String tipo = txtTipo.getText().trim();
+                    String pecasTrocadas = txtPecasTrocadas.getText().trim();
+                    int tempoDeParada = Integer.parseInt(txtTempoDeParada.getText().trim()); // Pode lançar NumberFormatException
+                    String tecnicoId = txtTecnicoId.getText().trim();
+                    String observacoes = txtObservacoes.getText().trim();
+    
+                    // Validação básica
+                    if (maquinaId.isEmpty() || tipo.isEmpty() || tecnicoId.isEmpty()) {
+                        JOptionPane.showMessageDialog(dialog, "Máquina ID, Tipo e Técnico ID não podem estar vazios!", "Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+    
                     Manutencao novaManutencao = new Manutencao(null, maquinaId, data, tipo, pecasTrocadas, tempoDeParada, tecnicoId, observacoes);
                     Manutencao manutencaoCriada = manutencaoController.createManutencao(novaManutencao);
-
+    
                     if (manutencaoCriada != null) {
                         tableModel.addRow(new Object[] {
                             manutencaoCriada.getId(), maquinaId, data, tipo, pecasTrocadas, tempoDeParada, tecnicoId, observacoes
@@ -131,30 +139,35 @@ public class ManutencaoPanel extends JPanel {
                         JOptionPane.showMessageDialog(dialog, "Manutenção cadastrada com sucesso!");
                         dialog.dispose();
                     } else {
-                        JOptionPane.showMessageDialog(dialog, "Erro ao cadastrar manutenção.");
+                        JOptionPane.showMessageDialog(dialog, "Erro ao cadastrar manutenção. Verifique os dados e tente novamente.");
                     }
+                } catch (NumberFormatException nfe) {
+                    JOptionPane.showMessageDialog(dialog, "Erro: O campo 'Tempo de Parada' deve ser um número inteiro.", "Erro de Formato", JOptionPane.ERROR_MESSAGE);
+                } catch (DateTimeParseException dtpe) {
+                    JOptionPane.showMessageDialog(dialog, "Erro: Data inválida. Use o formato aaaa-MM-dd.", "Erro de Formato", JOptionPane.ERROR_MESSAGE);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(dialog, "Erro ao preencher os dados: " + ex.getMessage());
+                    JOptionPane.showMessageDialog(dialog, "Erro inesperado ao preencher os dados: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace(); // Log adicional para debugging
                 }
             });
-
+    
             dialog.setVisible(true);
         });
-
+    
         btnSalvarAlteracoes.addActionListener(e -> {
             int selectedRow = manutencoesTable.getSelectedRow();
             if (selectedRow != -1) {
                 editarManutencao(selectedRow);
             } else {
-                JOptionPane.showMessageDialog(null, "Por favor, selecione uma linha para editar.");
+                JOptionPane.showMessageDialog(null, "Por favor, selecione uma linha para editar.", "Erro", JOptionPane.WARNING_MESSAGE);
             }
         });
-
+    
         btnGerarRelatorio.addActionListener(e -> {
             gerarRelatorioDeManutencoes();
         });
     }
-
+    
     private void addDoubleClickListener() {
         manutencoesTable.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -168,12 +181,12 @@ public class ManutencaoPanel extends JPanel {
             }
         });
     }
-
+    
     private void editarManutencao(int selectedRow) {
         JDialog dialog = new JDialog((JDialog) null, "Editar Manutenção", true);
         dialog.setSize(400, 400);
         dialog.setLayout(new GridLayout(0, 2));
-
+    
         String id = String.valueOf(tableModel.getValueAt(selectedRow, 0));
         String maquinaId = (String) tableModel.getValueAt(selectedRow, 1);
         LocalDate data = (LocalDate) tableModel.getValueAt(selectedRow, 2);
@@ -182,7 +195,7 @@ public class ManutencaoPanel extends JPanel {
         int tempoDeParada = Integer.parseInt(tableModel.getValueAt(selectedRow, 5).toString());
         String tecnicoId = (String) tableModel.getValueAt(selectedRow, 6);
         String observacoes = (String) tableModel.getValueAt(selectedRow, 7);
-
+    
         JTextField txtMaquinaId = new JTextField(maquinaId);
         JTextField txtData = new JTextField(data.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         JTextField txtTipo = new JTextField(tipo);
@@ -190,7 +203,7 @@ public class ManutencaoPanel extends JPanel {
         JTextField txtTempoDeParada = new JTextField(String.valueOf(tempoDeParada));
         JTextField txtTecnicoId = new JTextField(tecnicoId);
         JTextField txtObservacoes = new JTextField(observacoes);
-
+    
         dialog.add(new JLabel("Máquina ID:"));
         dialog.add(txtMaquinaId);
         dialog.add(new JLabel("Data (aaaa-MM-dd):"));
@@ -205,29 +218,29 @@ public class ManutencaoPanel extends JPanel {
         dialog.add(txtTecnicoId);
         dialog.add(new JLabel("Observações:"));
         dialog.add(txtObservacoes);
-
+    
         JButton btnSubmit = new JButton("Salvar");
         dialog.add(btnSubmit);
-
+    
         btnSubmit.addActionListener(ev -> {
             try {
                 String newMaquinaId = txtMaquinaId.getText().trim();
-                LocalDate newData = LocalDate.parse(txtData.getText().trim());
+                LocalDate newData = LocalDate.parse(txtData.getText().trim()); // Pode lançar DateTimeParseException
                 String newTipo = txtTipo.getText().trim();
                 String newPecasTrocadas = txtPecasTrocadas.getText().trim();
-                int newTempoDeParada = Integer.parseInt(txtTempoDeParada.getText().trim());
+                int newTempoDeParada = Integer.parseInt(txtTempoDeParada.getText().trim()); // Pode lançar NumberFormatException
                 String newTecnicoId = txtTecnicoId.getText().trim();
                 String newObservacoes = txtObservacoes.getText().trim();
-
+    
                 // Validação básica
                 if (newMaquinaId.isEmpty() || newTipo.isEmpty() || newTecnicoId.isEmpty()) {
                     JOptionPane.showMessageDialog(dialog, "Preencha todos os campos obrigatórios!", "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-
+    
                 Manutencao manutencaoAtualizada = new Manutencao(id, newMaquinaId, newData, newTipo, newPecasTrocadas, newTempoDeParada, newTecnicoId, newObservacoes);
                 manutencaoController.updateManutencao(manutencaoAtualizada);
-
+    
                 // Atualiza a tabela
                 tableModel.setValueAt(newMaquinaId, selectedRow, 1);
                 tableModel.setValueAt(newData.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), selectedRow, 2);
@@ -236,56 +249,61 @@ public class ManutencaoPanel extends JPanel {
                 tableModel.setValueAt(newTempoDeParada, selectedRow, 5);
                 tableModel.setValueAt(newTecnicoId, selectedRow, 6);
                 tableModel.setValueAt(newObservacoes, selectedRow, 7);
-
+    
                 JOptionPane.showMessageDialog(dialog, "Alterações salvas com sucesso!");
                 dialog.dispose();
+            } catch (NumberFormatException nfe) {
+                JOptionPane.showMessageDialog(dialog, "Erro: O campo 'Tempo de Parada' deve ser um número inteiro.", "Erro de Formato", JOptionPane.ERROR_MESSAGE);
+            } catch (DateTimeParseException dtpe) {
+                JOptionPane.showMessageDialog(dialog, "Erro: Data inválida. Use o formato aaaa-MM-dd.", "Erro de Formato", JOptionPane.ERROR_MESSAGE);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(dialog, "Erro ao salvar alterações: " + ex.getMessage());
+                JOptionPane.showMessageDialog(dialog, "Erro inesperado ao salvar as alterações: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace(); // Log adicional para debugging
             }
         });
-
+    
         dialog.setVisible(true);
     }
-
+    
     private void gerarRelatorioDeManutencoes() {
-    // Obtendo a data e hora atual no formato yyyy-MM-dd_HH-mm-ss
-    String dataAtual = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    String horaAtual = LocalTime.now().format(DateTimeFormatter.ofPattern("HH-mm-ss"));
-    
-    // Criando a pasta "relatorio" se não existir
-    File pastaRelatorio = new File("relatorio");
-    if (!pastaRelatorio.exists()) {
-        pastaRelatorio.mkdir(); // Cria a pasta
-    }
-    
-    // Nome do arquivo incluindo a data e a hora
-    File file = new File(pastaRelatorio, "relatorio_manutencao_" + dataAtual + "_" + horaAtual + ".txt");
-
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-        writer.write("Relatório de Manutenções\n");
-        writer.write("------------------------\n");
-
-        int totalTempoDeParada = 0; // Variável para armazenar o total de tempo de parada
-
-        for (int i = 0; i < tableModel.getRowCount(); i++) {
-            writer.write("ID: " + tableModel.getValueAt(i, 0) + "\n");
-            writer.write("Máquina ID: " + tableModel.getValueAt(i, 1) + "\n");
-            writer.write("Data: " + tableModel.getValueAt(i, 2) + "\n");
-            writer.write("Tipo: " + tableModel.getValueAt(i, 3) + "\n");
-            int tempoDeParada = Integer.parseInt(tableModel.getValueAt(i, 5).toString());
-            writer.write("Tempo de Parada: " + tempoDeParada + " horas\n");
-            writer.write("Técnico ID: " + tableModel.getValueAt(i, 6) + "\n");
-            writer.write("Observações: " + tableModel.getValueAt(i, 7) + "\n");
-            writer.write("------------------------\n");
-            totalTempoDeParada += tempoDeParada; // Acumulando o tempo de parada
+        // Obtendo a data e hora atual no formato yyyy-MM-dd_HH-mm-ss
+        String dataAtual = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String horaAtual = LocalTime.now().format(DateTimeFormatter.ofPattern("HH-mm-ss"));
+        
+        // Criando a pasta "relatorio" se não existir
+        File pastaRelatorio = new File("relatorio");
+        if (!pastaRelatorio.exists()) {
+            pastaRelatorio.mkdir(); // Cria a pasta
         }
-
-        writer.write("Total de Tempo de Inatividade: " + totalTempoDeParada + " horas\n"); // Exibe o total de inatividade
-
-        JOptionPane.showMessageDialog(this, "Relatório gerado com sucesso: " + file.getAbsolutePath());
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(this, "Erro ao gerar relatório: " + e.getMessage());
+        
+        // Nome do arquivo incluindo a data e a hora
+        File file = new File(pastaRelatorio, "relatorio_manutencao_" + dataAtual + "_" + horaAtual + ".txt");
+    
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write("Relatório de Manutenções\n");
+            writer.write("------------------------\n");
+    
+            int totalTempoDeParada = 0; // Variável para armazenar o total de tempo de parada
+    
+            for (int i = 0; i < tableModel.getRowCount(); i++) {
+                writer.write("ID: " + tableModel.getValueAt(i, 0) + "\n");
+                writer.write("Máquina ID: " + tableModel.getValueAt(i, 1) + "\n");
+                writer.write("Data: " + tableModel.getValueAt(i, 2) + "\n");
+                writer.write("Tipo: " + tableModel.getValueAt(i, 3) + "\n");
+                int tempoDeParada = Integer.parseInt(tableModel.getValueAt(i, 5).toString());
+                writer.write("Tempo de Parada: " + tempoDeParada + " horas\n");
+                writer.write("Técnico ID: " + tableModel.getValueAt(i, 6) + "\n");
+                writer.write("Observações: " + tableModel.getValueAt(i, 7) + "\n");
+                writer.write("------------------------\n");
+                totalTempoDeParada += tempoDeParada; // Acumulando o tempo de parada
+            }
+    
+            writer.write("Total de Tempo de Inatividade: " + totalTempoDeParada + " horas\n"); // Exibe o total de inatividade
+    
+            JOptionPane.showMessageDialog(this, "Relatório gerado com sucesso: " + file.getAbsolutePath());
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao gerar relatório: " + e.getMessage());
+        }
     }
-}
-
-}
+    
+    }
