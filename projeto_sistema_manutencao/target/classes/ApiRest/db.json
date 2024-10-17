@@ -1,18 +1,6 @@
 {
   "maquinas": [
     {
-      "tempoVidaEstimado": 10,
-      "codigo": "M00111",
-      "localizacao": "Linha 1",
-      "nome": "Torno CNC",
-      "fabricante": "Siemens",
-      "manual": "URL do manual",
-      "modelo": "CNC 3000",
-      "dataAquisicao": "2020-01-10",
-      "detalhes": "Operação em alta precisão",
-      "id": "1"
-    },
-    {
       "tempoVidaEstimado": 2,
       "codigo": "22yyy",
       "localizacao": "2",
@@ -50,14 +38,14 @@
     },
     {
       "tempoVidaEstimado": 1,
-      "codigo": "128900",
+      "codigo": "128900a",
       "localizacao": "r",
       "nome": "m",
       "fabricante": "m",
       "manual": "r",
       "modelo": "m",
       "dataAquisicao": "1999-11-12",
-      "detalhes": "r",
+      "detalhes": "r\\",
       "id": "11d8"
     },
     {
@@ -107,25 +95,87 @@
       "modelo": "CNC XYZ-9000   ",
       "dataAquisicao": "2020-03-15",
       "detalhes": "Torno autom�tico para pe�as cil�ndricas, com precis�o de 0.001mm.   "
+    },
+    {
+      "id": "1b46",
+      "tempoVidaEstimado": 10,
+      "codigo": "001",
+      "localizacao": "Localiza��o A",
+      "nome": "M�quina 1",
+      "fabricante": "Fabricante X",
+      "manual": "link_para_manual",
+      "modelo": "Modelo A",
+      "dataAquisicao": "2024-10-16",
+      "detalhes": "Detalhes sobre a m�quina"
+    },
+    {
+      "id": "566d",
+      "tempoVidaEstimado": 10,
+      "codigo": "001",
+      "localizacao": "Localiza��o A",
+      "nome": "M�quina 1",
+      "fabricante": "Fabricante X",
+      "manual": "link_para_manual",
+      "modelo": "Modelo A",
+      "dataAquisicao": "2024-10-16",
+      "detalhes": "Detalhes sobre a m�quina"
+    },
+    {
+      "id": "d4c4",
+      "tempoVidaEstimado": 10,
+      "codigo": "001",
+      "localizacao": "Localiza��o A",
+      "nome": "M�quina 1",
+      "fabricante": "Fabricante X",
+      "manual": "link_para_manual",
+      "modelo": "Modelo A",
+      "dataAquisicao": "2024-10-16",
+      "detalhes": "Detalhes sobre a m�quina"
+    },
+    {
+      "tempoVidaEstimado": 10,
+      "codigo": "001as",
+      "localizacao": "Localiza��o A",
+      "nome": "M�quina 1",
+      "fabricante": "Fabricante X",
+      "manual": "link_para_manual",
+      "modelo": "Modelo A",
+      "dataAquisicao": "2024-10-16",
+      "detalhes": "Detalhes sobre a m�quina",
+      "id": "0b69"
+    },
+    {
+      "id": "4d59",
+      "tempoVidaEstimado": 10,
+      "codigo": "001",
+      "localizacao": "Localiza��o A",
+      "nome": "M�quina 1",
+      "fabricante": "Fabricante X",
+      "manual": "link_para_manual",
+      "modelo": "Modelo A",
+      "dataAquisicao": "2024-10-16",
+      "detalhes": "Detalhes sobre a m�quina"
+    },
+    {
+      "tempoVidaEstimado": 10,
+      "codigo": "mn34",
+      "localizacao": "Localiza��o A",
+      "nome": "M�quina 1",
+      "fabricante": "Fabricante X",
+      "manual": "link_para_manual",
+      "modelo": "Modelo A",
+      "dataAquisicao": "2024-10-16",
+      "detalhes": "Detalhes sobre a m�quina",
+      "id": "6991"
     }
   ],
   "historicoManutencao": [
-    {
-      "tempoDeParada": 4,
-      "observacoes": "Substituição preventiva da correia.",
-      "tipo": "Preventiva",
-      "data": "2024-10-07",
-      "maquinaId": "1rrrr",
-      "pecasTrocadas": "Correia",
-      "tecnicoId": "João Silva",
-      "id": "1"
-    },
     {
       "tempoDeParada": 6,
       "observacoes": "Substituição do rolamento devido a desgaste.",
       "tipo": "Corretiva",
       "data": "2024-10-08",
-      "maquinaId": "1",
+      "maquinaId": null,
       "pecasTrocadas": "Rolamentos",
       "tecnicoId": "Maria Oliveira",
       "id": "2"
@@ -145,7 +195,7 @@
       "observacoes": "2",
       "tipo": "22",
       "data": "2020-10-22",
-      "maquinaId": "124eeeyyyccc",
+      "maquinaId": "124eeeyyycccrrr",
       "pecasTrocadas": "22",
       "tecnicoId": "trree",
       "id": "2582"
@@ -155,9 +205,9 @@
       "observacoes": "2s",
       "tipo": "2",
       "data": "2000-11-12",
-      "maquinaId": "555qqq",
+      "maquinaId": "555qqqs",
       "pecasTrocadas": "2",
-      "tecnicoId": null,
+      "tecnicoId": "desconhecido",
       "id": "7481"
     },
     {
@@ -185,51 +235,73 @@
       "observacoes": "a",
       "tipo": "qw",
       "data": "1990-10-11",
-      "maquinaId": "4552",
+      "maquinaId": "45523",
       "pecasTrocadas": "3",
       "tecnicoId": "c",
       "id": "8c03"
     },
     {
-      "id": "585e",
       "tempoDeParada": 33,
       "observacoes": "ww",
       "tipo": "23",
       "data": "1999-12-01",
-      "maquinaId": "134e",
+      "maquinaId": "ee134e",
       "pecasTrocadas": "2",
-      "tecnicoId": "Rr"
+      "tecnicoId": "Rr",
+      "id": "585e"
     },
     {
-      "id": "7993",
-      "tempoDeParada": 123,
-      "observacoes": "Verificada necessidade de ajuste na lubrifica��o.   ",
-      "tipo": "Preventiva  ",
+      "tempoDeParada": 3,
+      "observacoes": "Verificada necessidade de ajuste na lubrifica��o.",
+      "tipo": "Preventiva",
       "data": "2024-10-10",
-      "maquinaId": "MCH-2024-001   ",
-      "pecasTrocadas": "Correia de transmiss�o, Rolamento ABC   ",
-      "tecnicoId": "TEC-9876"
+      "maquinaId": "MCH-2024-001",
+      "pecasTrocadas": "Correia de transmiss�o, Rolamento ABC",
+      "tecnicoId": "TEC-9876",
+      "id": "7993"
     },
     {
-      "id": "d171",
       "tempoDeParada": 5,
       "observacoes": "tt",
       "tipo": "tt",
       "data": "2002-11-27",
-      "maquinaId": "tt",
+      "maquinaId": "ttsssfd",
       "pecasTrocadas": "5",
-      "tecnicoId": "tt"
+      "tecnicoId": "tt",
+      "id": "d171"
+    },
+    {
+      "id": "e734",
+      "tempoDeParada": 5,
+      "observacoes": "Observa��es",
+      "tipo": "Tipo A",
+      "data": "2024-10-16",
+      "maquinaId": "M�quina 1",
+      "pecasTrocadas": "Pe�a X",
+      "tecnicoId": "T�cnico 1"
+    },
+    {
+      "tempoDeParada": 52,
+      "observacoes": "Observa��es",
+      "tipo": "Tipo A",
+      "data": "2024-10-16",
+      "maquinaId": "mtt",
+      "pecasTrocadas": "Pe�a X",
+      "tecnicoId": "T�cnico 1",
+      "id": "f58b"
+    },
+    {
+      "tempoDeParada": 5,
+      "observacoes": "Observa��es",
+      "tipo": "Tipo A",
+      "data": "2024-10-16",
+      "maquinaId": "fdsraddffwe",
+      "pecasTrocadas": "Pe�a X",
+      "tecnicoId": "T�cnico 1",
+      "id": "b7f7"
     }
   ],
   "falhas": [
-    {
-      "data": "2024-01-28",
-      "prioridade": "Alt",
-      "maquinaId": "1stttrr",
-      "problema": "Falha no motor",
-      "operador": "Carlos Lima",
-      "id": "1"
-    },
     {
       "data": "2024-10-08",
       "prioridade": "Média8",
@@ -261,6 +333,38 @@
       "maquinaId": "223",
       "problema": "33",
       "operador": "3"
+    },
+    {
+      "id": "e807",
+      "data": "2024-10-16",
+      "prioridade": "Alta",
+      "maquinaId": "Maquina1",
+      "problema": "Falha mec�nica",
+      "operador": "Operador1"
+    },
+    {
+      "id": "aea4",
+      "data": "2024-10-16",
+      "prioridade": "Alta",
+      "maquinaId": "M�quina 1",
+      "problema": "Falha Cr�tica",
+      "operador": "Operador 1"
+    },
+    {
+      "id": "2a08",
+      "data": "2024-10-16",
+      "prioridade": "Alta",
+      "maquinaId": "M�quina 1",
+      "problema": "Falha Cr�tica",
+      "operador": "Operador 1"
+    },
+    {
+      "id": "6b56",
+      "data": "2024-10-16",
+      "prioridade": "Alta",
+      "maquinaId": "M�quina 1",
+      "problema": "Falha Cr�tica",
+      "operador": "Operador 1"
     }
   ],
   "tecnicos": [
@@ -275,18 +379,6 @@
       "especialidade": "Mecanica",
       "disponibilidade": "Ocupado",
       "nome": "Davi"
-    },
-    {
-      "id": "0333",
-      "especialidade": "Mec�nico",
-      "disponibilidade": "Dispon�vel",
-      "nome": "Jo�o"
-    },
-    {
-      "id": "33b2",
-      "especialidade": "Mec�nico",
-      "disponibilidade": "Dispon�vel",
-      "nome": "Jo�o"
     },
     {
       "id": "6ca9",

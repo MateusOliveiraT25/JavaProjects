@@ -1,0 +1,107 @@
+Relatório de Manutenções
+------------------------
+ID: 2
+Máquina ID: desconhecido
+Data: 2024-10-08
+Tipo: Corretiva
+Tempo de Parada: 6 horas
+Técnico ID: Maria Oliveira
+Observações: SubstituiÃ§Ã£o do rolamento devido a desgaste.
+------------------------
+ID: 39e0
+Máquina ID: 3x
+Data: 2000-11-12
+Tipo: te
+Tempo de Parada: 4 horas
+Técnico ID: F
+Observações: eee
+------------------------
+ID: 2582
+Máquina ID: 124eeeyyyccc
+Data: 2020-10-22
+Tipo: 22
+Tempo de Parada: 2 horas
+Técnico ID: trree
+Observações: 2
+------------------------
+ID: 7481
+Máquina ID: 555qqq
+Data: 2000-11-12
+Tipo: 2
+Tempo de Parada: 2 horas
+Técnico ID: desconhecido
+Observações: 2s
+------------------------
+ID: 617d
+Máquina ID: 33
+Data: 2000-11-11
+Tipo: 22
+Tempo de Parada: 2 horas
+Técnico ID: desconhecido
+Observações: 2ss
+------------------------
+ID: a7b2
+Máquina ID: 123
+Data: 2029-12-11
+Tipo: rttt
+Tempo de Parada: 7 horas
+Técnico ID: r
+Observações: r
+------------------------
+ID: 8c03
+Máquina ID: 4552
+Data: 1990-10-11
+Tipo: qw
+Tempo de Parada: 3 horas
+Técnico ID: c
+Observações: a
+------------------------
+ID: 585e
+Máquina ID: 134e
+Data: 1999-12-01
+Tipo: 23
+Tempo de Parada: 33 horas
+Técnico ID: Rr
+Observações: ww
+------------------------
+ID: 7993
+Máquina ID: MCH-2024-001
+Data: 2024-10-10
+Tipo: Preventiva
+Tempo de Parada: 3 horas
+Técnico ID: TEC-9876
+Observações: Verificada necessidade de ajuste na lubrificaï¿½ï¿½o.
+------------------------
+ID: d171
+Máquina ID: tt
+Data: 2002-11-27
+Tipo: tt
+Tempo de Parada: 5 horas
+Técnico ID: tt
+Observações: tt
+------------------------
+ID: e734
+Máquina ID: Mï¿½quina 1
+Data: 2024-10-16
+Tipo: Tipo A
+Tempo de Parada: 5 horas
+Técnico ID: Tï¿½cnico 1
+Observações: Observaï¿½ï¿½es
+------------------------
+ID: f58b
+Máquina ID: Mï¿½quina 1
+Data: 2024-10-16
+Tipo: Tipo A
+Tempo de Parada: 5 horas
+Técnico ID: Tï¿½cnico 1
+Observações: Observaï¿½ï¿½es
+------------------------
+ID: b7f7
+Máquina ID: Mï¿½quina 1
+Data: 2024-10-16
+Tipo: Tipo A
+Tempo de Parada: 5 horas
+Técnico ID: Tï¿½cnico 1
+Observações: Observaï¿½ï¿½es
+------------------------
+Total de Tempo de Inatividade: 82 horas

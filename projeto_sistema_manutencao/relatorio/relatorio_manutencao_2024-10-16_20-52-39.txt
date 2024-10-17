@@ -1,15 +1,7 @@
 Relatório de Manutenções
 ------------------------
-ID: 1
-Máquina ID: 1rrrr
-Data: 2024-10-07
-Tipo: Preventiva
-Tempo de Parada: 4 horas
-Técnico ID: JoÃ£o Silva
-Observações: SubstituiÃ§Ã£o preventiva da correia.
-------------------------
 ID: 2
-Máquina ID: 1
+Máquina ID: desconhecido
 Data: 2024-10-08
 Tipo: Corretiva
 Tempo de Parada: 6 horas
@@ -88,4 +80,28 @@ Tempo de Parada: 5 horas
 Técnico ID: tt
 Observações: tt
 ------------------------
-Total de Tempo de Inatividade: 191 horas
+ID: e734
+Máquina ID: Mï¿½quina 1
+Data: 2024-10-16
+Tipo: Tipo A
+Tempo de Parada: 5 horas
+Técnico ID: Tï¿½cnico 1
+Observações: Observaï¿½ï¿½es
+------------------------
+ID: f58b
+Máquina ID: Mï¿½quina 1
+Data: 2024-10-16
+Tipo: Tipo A
+Tempo de Parada: 5 horas
+Técnico ID: Tï¿½cnico 1
+Observações: Observaï¿½ï¿½es
+------------------------
+ID: b7f7
+Máquina ID: Mï¿½quina 1
+Data: 2024-10-16
+Tipo: Tipo A
+Tempo de Parada: 5 horas
+Técnico ID: Tï¿½cnico 1
+Observações: Observaï¿½ï¿½es
+------------------------
+Total de Tempo de Inatividade: 202 horas

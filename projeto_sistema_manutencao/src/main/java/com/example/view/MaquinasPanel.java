@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -121,7 +122,7 @@ public class MaquinasPanel extends JPanel {
             dialog.add(txtModelo);
             dialog.add(new JLabel("Fabricante:"));
             dialog.add(txtFabricante);
-            dialog.add(new JLabel("Data de Aquisição (aaaa-MM-dd):"));
+            dialog.add(new JLabel("Data de Aquisição (yyyy-MM-dd):"));
             dialog.add(txtDataAquisicao);
             dialog.add(new JLabel("Tempo de Vida Estimado:"));
             dialog.add(txtTempoVidaEstimado);
@@ -144,19 +145,23 @@ public class MaquinasPanel extends JPanel {
                     String nome = txtNome.getText().trim();
                     String modelo = txtModelo.getText().trim();
                     String fabricante = txtFabricante.getText().trim();
-                    String dataAquisicaoStr = txtDataAquisicao.getText().trim();
+    
+                    // Valida a data
                     LocalDate dataAquisicao;
                     try {
-                        dataAquisicao = LocalDate.parse(dataAquisicaoStr); // Valida data
-                    } catch (Exception ex) {
-                        throw new IllegalArgumentException("Data de aquisição inválida. Formato esperado: aaaa-MM-dd.");
+                        dataAquisicao = LocalDate.parse(txtDataAquisicao.getText().trim());
+                    } catch (DateTimeParseException ex) {
+                        throw new IllegalArgumentException("Data de Aquisição inválida. Use o formato 'yyyy-MM-dd'.");
                     }
+    
+                    // Valida o tempo de vida estimado
                     int tempoVidaEstimado;
                     try {
                         tempoVidaEstimado = Integer.parseInt(txtTempoVidaEstimado.getText().trim());
                     } catch (NumberFormatException ex) {
-                        throw new IllegalArgumentException("Tempo de vida estimado deve ser um número inteiro.");
+                        throw new IllegalArgumentException("Tempo de Vida Estimado deve ser um número inteiro.");
                     }
+    
                     String localizacao = txtLocalizacao.getText().trim();
                     String detalhes = txtDetalhes.getText().trim();
                     String manual = txtManual.getText().trim();
@@ -178,12 +183,12 @@ public class MaquinasPanel extends JPanel {
                         JOptionPane.showMessageDialog(dialog, "Máquina cadastrada com sucesso!");
                         dialog.dispose(); // Fecha o diálogo
                     } else {
-                        JOptionPane.showMessageDialog(dialog, "Erro ao cadastrar máquina. Verifique os dados.");
+                        JOptionPane.showMessageDialog(dialog, "Erro ao cadastrar máquina.");
                     }
                 } catch (IllegalArgumentException ex) {
                     JOptionPane.showMessageDialog(dialog, "Erro: " + ex.getMessage());
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(dialog, "Erro inesperado: " + ex.getMessage());
+                    JOptionPane.showMessageDialog(dialog, "Erro ao preencher os dados: " + ex.getMessage());
                 }
             });
     
@@ -241,7 +246,7 @@ public class MaquinasPanel extends JPanel {
         dialog.add(txtModelo);
         dialog.add(new JLabel("Fabricante:"));
         dialog.add(txtFabricante);
-        dialog.add(new JLabel("Data de Aquisição (aaaa-MM-dd):"));
+        dialog.add(new JLabel("Data de Aquisição (yyyy-MM-dd):"));
         dialog.add(txtDataAquisicao);
         dialog.add(new JLabel("Tempo de Vida Estimado:"));
         dialog.add(txtTempoVidaEstimado);
@@ -264,19 +269,23 @@ public class MaquinasPanel extends JPanel {
                 String newNome = txtNome.getText().trim();
                 String newModelo = txtModelo.getText().trim();
                 String newFabricante = txtFabricante.getText().trim();
-                String newDataAquisicaoStr = txtDataAquisicao.getText().trim();
+    
+                // Valida a data
                 LocalDate newDataAquisicao;
                 try {
-                    newDataAquisicao = LocalDate.parse(newDataAquisicaoStr);
-                } catch (Exception ex) {
-                    throw new IllegalArgumentException("Data de aquisição inválida. Formato esperado: aaaa-MM-dd.");
+                    newDataAquisicao = LocalDate.parse(txtDataAquisicao.getText().trim());
+                } catch (DateTimeParseException ex) {
+                    throw new IllegalArgumentException("Data de Aquisição inválida. Use o formato 'yyyy-MM-dd'.");
                 }
+    
+                // Valida o tempo de vida estimado
                 int newTempoVidaEstimado;
                 try {
                     newTempoVidaEstimado = Integer.parseInt(txtTempoVidaEstimado.getText().trim());
                 } catch (NumberFormatException ex) {
-                    throw new IllegalArgumentException("Tempo de vida estimado deve ser um número inteiro.");
+                    throw new IllegalArgumentException("Tempo de Vida Estimado deve ser um número inteiro.");
                 }
+    
                 String newLocalizacao = txtLocalizacao.getText().trim();
                 String newDetalhes = txtDetalhes.getText().trim();
                 String newManual = txtManual.getText().trim();
@@ -306,7 +315,7 @@ public class MaquinasPanel extends JPanel {
             } catch (IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(dialog, "Erro: " + ex.getMessage());
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(dialog, "Erro inesperado: " + ex.getMessage());
+                JOptionPane.showMessageDialog(dialog, "Erro ao preencher os dados: " + ex.getMessage());
             }
         });
     
